@@ -11,7 +11,7 @@
 \addtolength{\topmargin}{-1in}
 \addtolength{\textheight}{2in}
 
-
+\usepackage{mathtools}
 \usepackage{graphicx}              % to include figures
 \usepackage{amsmath}               % great math stuff
 \usepackage{amsmath,scalerel}
@@ -121,7 +121,7 @@
 \subsection{El Problema}
 
 \subsubsection{Descripcion}
-Planteado de otra forma, el problema a resolver consiste en una situación en la que tenemos $n$ trabajos $t_{1},t_{2},...,t_{n}$ y dada cualquier división de los trabajos en dos secuencias $A=(t_{a_{1}},t_{a_{2}},..., t_{a_{|A|}})$ y $B=(t_{b_{1}}, t_{b_{2}},...,t_{b_{|B|}})$  con $a_{i}<a_{j} \land b_{i}<b_{j} si i<j$ (cada secuencia representa las impresiones que realizo una impresora) tiene asociado un costo; donde este viene dado por la suma del costo de $A$ y el de $B$. El costo de $A$ es  $\sum_{i=1}^{|A|} costo (t_{a_{i}},t_{a_{i-1}})$  donde $costo$ es una función que toma valores en $\NN_{0}$ y $costo(t_{i},t_{j})$ esta definidio si $i>j$ con $i \in [1,2,..,n] \land j \in [0,1,..,n-1]$ y represnta el costo de poner el trabajo i sobre el j (el costo de poner sobre el trabajo $t_{0}$ es el de ponerlo sobre la máquina vacía y $a_{0}=0$). El costo de $B$ se calcula análogamente. 
+Planteado de otra forma, el problema a resolver consiste en una situación en la que tenemos $n$ trabajos $t_{1},t_{2},...,t_{n}$ y dada cualquier división de los trabajos en dos secuencias $A=(t_{a_{1}},t_{a_{2}},..., t_{a_{|A|}})$ y $B=(t_{b_{1}}, t_{b_{2}},...,t_{b_{|B|}})$  con $a_{i}<a_{j} \land b_{i}<b_{j} si i<j$ (cada secuencia representa los trabajos que realizo una máquina) tiene asociado un costo; donde este viene dado por la suma del costo de $A$ y el de $B$. El costo de $A$ es  $\sum_{i=1}^{|A|} costo (t_{a_{i}},t_{a_{i-1}})$  donde $costo$ es una función que toma valores en $\NN_{0}$ y $costo(t_{i},t_{j})$ esta definidio si $i>j$ con $i \in [1,2,..,n] \land j \in [0,1,..,n-1]$ y represnta el costo de poner el trabajo i sobre el j (el costo de poner sobre el trabajo $t_{0}$ es el de ponerlo sobre la máquina vacía y $a_{0}=0$). El costo de $B$ se calcula análogamente. 
 
 El problema pide dados los trabajos y la funcion de costo, dar $A$ o $B$ que minimice el costo y decir cuanto es este costo (basta dar uno de los dos ya que el otro se deduce por ser el complemento -en el conjunto de trabajos-)
 \subsubsection{Ejemplos}
@@ -133,14 +133,51 @@ El problema pide dados los trabajos y la funcion de costo, dar $A$ o $B$ que min
   300 & 3 & 3 &  \\
   300 & 3 & 3 & 3 
 \end{matrix}$ tenemos 4 trabajos que sacando el primero son excesivamente caros de poner por primera vez en una maquina, luego si ponemos todos en la misma, el costo sera $2+3+3+3=11$ y una máquina tendrá todos los trabajos (si todos no estan en la misma, en algun momento pagamos $300$ y el costo ya seria mayor a $11$).
-\item
+\item En el caso en que la entrada es $\begin{matrix}
+  4 &  &  &  \\
+  2 &  &  &  \\
+  4 & 1 &  &  \\
+  300 & 3 & 300 &  \\
+  300 & 300 & 300 & 3 
+\end{matrix}$ tenemos 4 trabajos, ponemos el primero en una maquina y nos da costo $2$, si bien en el proximo paso lo mejor es poner el nuevo trabajo encima (si hicieramos un algoritmo goloso), en ese caso el siguiente trabajo costara $300$ haciendo el total $>299$, y si no hibieramos puesto el segundo encima, si bien costaba mas en ese paso, reducía el costo del próximo, dando un costo total de $12$ estando los trabajos 1, 3 y 4 en una maquina.
 \end{itemize}
 
 
-\subsection{El Algoritmo sin podas}
+\subsection{El Algoritmo}
 
-\subsubsection{Resumen}
+\subsubsection{La función de dinámica}
+Para resolver el problema, utilizaremos programación dinámica. La idea de esto se basa en que la solución de nuestro problema es calculable en base a la solucion de subproblemas (utilizamos optimalidad de subproblemas). Definimos así $f(q,h)$ como la función que asigna el mínimo costo posible para llegar al trabajo $q$-ésimo hecho (habiendo hecho de la 1 hasta la q inclusive) con el trabajo $h$ como el último que se hizo en algunas de las máquinas. Tomamos como dominio de la $f$ a los $q \in [1,2,...,t] \land h \in [0,1,...,q-1]$. donde $h=0$ significa que hay una maquina vacía. Es clave notar que siempre que luego de que realizamos el trabajo $q$ en una de las máquinas estará en el tope dicho trabajo, por ende basta definir que hay en la otra. Definimos a continuación la función para los valores en el dominio ya mencionado:
+
+\begin{equation}
+    f(q,h) =
+    \begin{cases*}
+       costo(q,0) & $si$  $q=1$  $\land$  $h=0 $\\
+       f(q-1,h)+costo(q,q-1) & $si  h < q-1 $\\
+       \displaystyle \min_{0 \leq h \leq q-2} {f(q-1,h)+precios[q][h]}       & caso contrario (h=q-1)
+    \end{cases*}
+  \end{equation}
+
+Esta función hace efectivamente lo que queremos:
+\begin{itemize}
+
+ \item En el primer caso lo hace pues si $q=1$ esto implica $h=0$ por restricciones de dominio y es la minima cantidad dado que coloqué solo el primer trabajo, pues si o si el costo será el de colocar la primera sobre la maquina vacía, por ende será el mínimo.
+ \item En el segundo caso también lo hace pues si esta un trabajo $h<q-1$ en una máquina es porque el ultimo trabajo colocado (el q) se colocó en la otra, por ende previo a finalizar el trabajo $q$, estaba en una máquina el $q-1$ y en otra el $h$. Más aún sabemos que el q lo colocamos sobre el $q-1$. Supongamos $f(q,h)$ el costo mínimo dado el trabajo $q$ hecho y el trabajo $h$ en alguna impresora (analogo para $f(q-1,h)$), si es $f(q,h)<f(q-1,h)+costo(q,q-1)$ luego es absurdo pues $f(q-1,h)$ no es el minimo, ya que hago la secuencia que da el mínimo en $q$ trabajos hechos con $h$ en una máquina sin el ultimo paso (resto su costo, o sea el de poner a $q$ sobre $q-1$) y me queda que tengo una forma de tener $q-1$ trabajos hechos con $h$ en una maquina con costo $f(q,h)-costo(q,q-1)<f(q-1,h)$ lo que es absurdo pues $f(q-1,h)$ era el minimo.
+ \item En el tercer caso también sucede pues si está el trabajo $q-1$ en una máquina con la impresión $q$ ya hecha, es porque la impresión $q$ se colocó sobre alguna impresión $h$ con $0 \leq h \leq q-2$. Dada dicho trabajo, de forma totalmente análoga al caso de arriba, debe ser el mínimo buscado con $q$ trabajos hechos y el $q-1$ en una máquina $f(q,q-1)= f(q-1,h)+costo(q,h)$. Luego como no se cual trabajo de todos pudo haber sido, me quedo con el mínimo moviendo los h en el rango dado.
+  \end{itemize}
+Así, definimos una función que resuelve el problema pedido si hayamos el $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ pues es el mínimo costo de realizar hasta el trabajo $t$ (o sea todos) con el trabajo $h$ en alguna máquina (me fijo todos los escenarios posibles como puede terminar la otra máquina, o sea todos los posibles $h$). 
+
+Así, podemos implementar la $f$ dada, donde podemos ir recordando los valores que toma $f$ y evitar calcularlos varias veces. Más aún podríamos mantener una lista (ordenada) de cuales son los elementos que hay en alguna máquina y cada vez que agregamos un trabajo, checkeamos si lo agregamos sobre el ultimo de la lista y en ese caso lo incluimos al final de esta (sino es porque fue a la otra máquina).
+
+Lo que sucede es que tenemos varios subproblemas y en este caso siempre resolvemos todos, por lo que no parece tener una clara ventaja hacerlo top-down. Más aún, hacerlo bottom-up nos permitirá solo guardarnos los subproblemas relativos a tener hecho exactamente hasta el anterior trabajo (con $q-1$ y para todos los $h$, los menores no los utilizo en el calculo de $f(q,h)$), o sea nos reduce la complejidad espacial! Ya que incialmente debíamos guardar el valor de $f$ para todo $q \in [1,2,...,t] \land h \in [0,1,...,q-1]$ lo que era $\mathcal{O}(n^2)$, y de esta forma solamente guardamos los valores para $q-1$ lo que es $\mathcal{O}(n)$.
+
+ Veamos todo esto en un pseudocódigo:
+\subsubsection{El Pseudocódigo}
+
+
+
 \subsection{Complejidad}
+
+Como pudimos ver en la explicación de la función de dinámica, tenemos $n^2$ subproblemas y cada uno se resuelve en  $\mathcal{O}(1)$ salvo los subproblemas donde$ h=q-1$ que toman $\mathcal{O}(n)$. Luego tengo $\mathcal{O}(n^2)$ subproblemas (son $n^2$ en total y le saco los que no se resuelven en $\mathcal{O}(1)$ que son $n$)  resueltos en $\mathcal{O}(1)$ cada uno y $\mathcal{O}(n)$ subproblemas (hay uno por cada $q$) resueltos en $\mathcal{O}(n)$ cada uno. Luego se deduce que la complejidad sera $\mathcal{O}(n*n)+\mathcal{O}(n^2 *1)=\mathcal{O}(n^2)$
 
 \subsection{Experimentación}
 \subsubsection{Contexto}
