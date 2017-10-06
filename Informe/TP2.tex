@@ -173,11 +173,66 @@ Lo que sucede es que tenemos varios subproblemas y en este caso siempre resolvem
  Veamos todo esto en un pseudocódigo:
 \subsubsection{El Pseudocódigo}
 
+Cabe aclarar que en el pseudcódigo (como también en la implementación) numeramos los trabajos desde 0 a exceión de en $costos$ (que es una matriz) en el segundo indice, los trabajos estan numerados desde 1 (ya que el 0 se reserva para el costo de poner sobre la máquina vacía).
+
+\begin{algorithm}[H]
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \underline{Backtracking} $(confiables,actual,matriz, maximo)$\;
+    \Input{$trabajos \in \NN_{0}$; $costo \in \NN_{0}^{trabajos \times trabajos}$}
+    \Output{$costo \in \NN_{0}$,$lista$ vector enteros}
+    
+    Inicializo en $0$ $actualcosto$ y $anteriorcosto$ vectores de enteros (de tamaño $trabajos$);
+    
+    Inicializo en vectores vacíos $actuallista$ y $anteriorlista$ vectores de vectores de enteros (de tamaño $trabajos$);
+    
+    \For{q $\in [0,1,..,trabajos)$}{
+    	\For{h $\in [0,1,..,q)$}{
+    	
+    		$actualcosto[h]=anteriorcosto[h]+costo[q][q]$;
+    		
+    		$actuallista[h]=anteriorlista[h]$;
+    		
+    		\If{Estaba $q-1$ en $anteriorlista[h]$}
+        	{
+        		Agrego $q$ a $anteriorlista[h]$; 
+        	}
+        	
+    		$actualcosto[q]=min(actualcosto[q],anteriorcosto[h]+costos[q][h])$;
+    		
+    		Recuerdo en $elegido$ el $h$ que consiguió el minimo;
+   		 }
+   		 
+    $actuallista[q]=anteriorlista[elegido]$;
+    
+    \If{NO Estaba $q-1$ en $anteriorlista[elegido]$}
+        	{
+        		Agrego $q$ a $anteriorlista[elegido]$; 
+        	}
+    anteriorcosto=actualcosto;
+    
+	anteriorlista=actuallista;
+    }
+    
+     $ costo$ = minimo de $actualcosto$ (se alcanza en $actualcosto[posicion]$);
+     
+     $lista = actuallista[posicion]$;
+     
+      return $costo$, $lista$;    
+      
+      \caption{Devuelve el mínimo costo de entre todas las formas posibles de realizar todas las impresiones}   
+\end{algorithm}
+
+En el pseudocódigo basicamente lo que hacemos es aplicar la $f$ pero en orden, es importante esto ya que hay que tener cuidado en el orden en que resolvemos las dependencias (es porque estamos haciendo bottom-up). Es claro que cada fila, usa la fila anterior, o sea para calcular $f(q,h)$ para todo $h$ uso todos los valores de $f(q-1,h)$ para todo $h$. Por esto es que ambos for se anidan de dicha manera. Al principio del for actualizamos el costo segun nos dice la $f$ y la lista de los trabajos que hay en alguna máquina se modifica solo si era el de la máquina que tenía a $q-1$ ya que es a la que le agrego el trabajo $q$. Además, como voy a recorrer todos los $h$, voy actualizando el $actualcosto[q]$ si tengo un menor $anteriorcosto[h]+costos[q][h]$; una vez que iteré en todos los h calculé el minimo que es $f(q,q-1)$. Ahí salimos del primer for y como hacía con $actuallista[h]$ actualizo si corresponde la $actuallista[q]$. Finalmente, antes de pasar a la siguiente iteración pongo en $anteriorcosto$ el $actualcosto$ y en $ anteriorlista$ la $actuallista$, ya que en la proxima iteración los actuales serán anteriores y sobre actual pisaré y guardaré nuevos resultados. Finalmente, se devuelve el mínimo buscado y su lista asociada ( lo que nos pedían era $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ que en nuestro caso es el minimo de $actualcosto$.
+
 
 
 \subsection{Complejidad}
 
-Como pudimos ver en la explicación de la función de dinámica, tenemos $n^2$ subproblemas y cada uno se resuelve en  $\mathcal{O}(1)$ salvo los subproblemas donde$ h=q-1$ que toman $\mathcal{O}(n)$. Luego tengo $\mathcal{O}(n^2)$ subproblemas (son $n^2$ en total y le saco los que no se resuelven en $\mathcal{O}(1)$ que son $n$)  resueltos en $\mathcal{O}(1)$ cada uno y $\mathcal{O}(n)$ subproblemas (hay uno por cada $q$) resueltos en $\mathcal{O}(n)$ cada uno. Luego se deduce que la complejidad sera $\mathcal{O}(n*n)+\mathcal{O}(n^2 *1)=\mathcal{O}(n^2)$
+Cabe aclarar que para el análisis de complejidad tomaremos $n$ como la cantidad de trabajos. Como pudimos ver en la explicación de la función de dinámica, tenemos $n^2$ subproblemas y cada uno se resuelve en  $\mathcal{O}(1)$ salvo los subproblemas donde$ h=q-1$ que toman $\mathcal{O}(n)$. Luego tengo $\mathcal{O}(n^2)$ subproblemas (son $n^2$ en total y le saco los que no se resuelven en $\mathcal{O}(1)$ que son $n$)  resueltos en $\mathcal{O}(1)$ cada uno y $\mathcal{O}(n)$ subproblemas (hay uno por cada $q$) resueltos en $\mathcal{O}(n)$ cada uno. Luego se deduce que la complejidad sera $\mathcal{O}(n*n)+\mathcal{O}(n^2 *1)=\mathcal{O}(n^2)$
+
+Más aún esto se ratifica si miramos el pseudocódigo ya que realizamos todas operaciones que son $\mathcal{O}(n)$ u $\mathcal{O}(n)$ fuera del ciclo (inicialización o recorrido de vectores de tamaño a lo sumo $n$). Veamos que sucede dentro del ciclo: tenemos dos ciclos anidados que se ejecuta cada uno  a lo sumo $n$ veces, por ende todo se ejecuta a lo sumo $n^2$ veces y todo lo de adentro son operaciones $\mathcal{O}(1)$ (checkear si $q-1$ esta en $anteriorlista[h]$ es $\mathcal{O}(1)$ porque inserto siempre ordenado y si es un elemento, es el ultimo; lo mismo vale para checkear si $q-1$ esta en $anteriorlista[elegido]$).Luego salimos del segundo for (el anidado)y cabe aclarar que copiar el vector $actualcosto$ y $actuallista$ no es $\mathcal{O}(1)$ sino $\mathcal{O}(n)$, pero esta solo en uno de los ciclos, por lo que se repite $n$ veces y aporta una complejidad de $n* \mathcal{O}(n)= \mathcal{O}(n^2)$. Por ende en el ciclo tenemos $n^2 *\mathcal{O}(1)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$ y sumado a lo que esta fuera del ciclo nos da $\mathcal{O}(n)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$
 
 \subsection{Experimentación}
 \subsubsection{Contexto}
