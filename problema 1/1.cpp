@@ -27,10 +27,10 @@ int main(){
 			int costo=0;
 			vector<vector<int>> anteriorlista(trabajos);
 			//anteriorlista[h] es la lista de impresiones que hizo una maquina al llegar a la anterior impresion a la actual
-			// hecha con el trabajo h en alguna maquina (h=0 es con una maquina vacia).
+			// hecha con el trabajo h en alguna maquina (h=0 es con una maquina vacia). Siempre esta ordenado
 			vector<vector<int>> actuallista(trabajos);
-			//actuallista[h] es la lista de una impresiones que hizo una maquina al lllegar a la actual impresion hecha
-			// con el trabajo h en alguna maquina (h=0 es con una maquina vacia).
+			//actuallista[h] es la lista de impresiones que hizo una de las maquinas al llegar a la actual impresion hecha
+			// con el trabajo h en alguna maquina (h=0 es con una maquina vacia). Siempre esta ordenado
 			vector< int > anteriorcosto(trabajos);
 			//anteriorcosto[h] es el costo minimo de llegar a la anterior impresion a la actual hecha con el trabajo h
 			// en alguna maquina (h=0 es con una maquina vacia). 
@@ -60,7 +60,7 @@ int main(){
 					actuallista[h]=anteriorlista[h];
 					if(anteriorlista[h].size()!=0 and anteriorlista[h].back()==q){
 						actuallista[h].push_back(q+1);//aca llevo bien numeradas las impresiones.
-						//lo agrego a la lista si estaba el trabajo q, pues fue a la misma maquina que el trabajo q.
+						//lo agrego a la lista si estaba el trabajo q, pues fue a la misma maquina que el trabajo q,
 						//que como tengo ordenada la lista es el ultimo. Si estaba vacía no entro
 					}
 					

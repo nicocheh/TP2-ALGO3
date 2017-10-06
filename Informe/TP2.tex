@@ -121,9 +121,20 @@
 \subsection{El Problema}
 
 \subsubsection{Descripcion}
+Planteado de otra forma, el problema a resolver consiste en una situación en la que tenemos $n$ trabajos $t_{1},t_{2},...,t_{n}$ y dada cualquier división de los trabajos en dos secuencias $A=(t_{a_{1}},t_{a_{2}},..., t_{a_{|A|}})$ y $B=(t_{b_{1}}, t_{b_{2}},...,t_{b_{|B|}})$  con $a_{i}<a_{j} \land b_{i}<b_{j} si i<j$ (cada secuencia representa las impresiones que realizo una impresora) tiene asociado un costo; donde este viene dado por la suma del costo de $A$ y el de $B$. El costo de $A$ es  $\sum_{i=1}^{|A|} costo (t_{a_{i}},t_{a_{i-1}})$  donde $costo$ es una función que toma valores en $\NN_{0}$ y $costo(t_{i},t_{j})$ esta definidio si $i>j$ con $i \in [1,2,..,n] \land j \in [0,1,..,n-1]$ y represnta el costo de poner el trabajo i sobre el j (el costo de poner sobre el trabajo $t_{0}$ es el de ponerlo sobre la máquina vacía y $a_{0}=0$). El costo de $B$ se calcula análogamente. 
 
+El problema pide dados los trabajos y la funcion de costo, dar $A$ o $B$ que minimice el costo y decir cuanto es este costo (basta dar uno de los dos ya que el otro se deduce por ser el complemento -en el conjunto de trabajos-)
 \subsubsection{Ejemplos}
-
+\begin{itemize}
+\item En el caso en que la entrada es $\begin{matrix}
+  4 &  &  &  \\
+  2 &  &  &  \\
+  300 & 3 &  &  \\
+  300 & 3 & 3 &  \\
+  300 & 3 & 3 & 3 
+\end{matrix}$ tenemos 4 trabajos que sacando el primero son excesivamente caros de poner por primera vez en una maquina, luego si ponemos todos en la misma, el costo sera $2+3+3+3=11$ y una máquina tendrá todos los trabajos (si todos no estan en la misma, en algun momento pagamos $300$ y el costo ya seria mayor a $11$).
+\item
+\end{itemize}
 
 
 \subsection{El Algoritmo sin podas}
