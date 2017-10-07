@@ -20,22 +20,30 @@ struct ruta{
 };
 
 void agregarRuta(ruta nuevaRuta, vector<nodo> nodos, vector<ruta>& rutasTotales, vector<ruta>& rutasPosibles, int f, int e1, int e2){
+	cout<<"entro a agregarRuta"<<endl;
 	rutasTotales.push_back(nuevaRuta);
     if (e1<=f){//fabrica-cliente
+		cout<<"fabrica-cliente"<<endl;
 		nodos[0].rutasDe.push_back(nuevaRuta.numero);
+		cout<<"nodos[0]"<<endl;
 		nodos[e2-f].rutasDe.push_back(nuevaRuta.numero);
+		cout<<"nodos[e2-f]"<<endl;
 		rutasPosibles.push_back(nuevaRuta);							//ya lo agrega en los 1ros posibles
-		nuevaRuta.nodosQueConecta = make_pair(nodos[0],nodos[e2]);
+		cout<<"agrega a rP"<<endl;
+		nuevaRuta.nodosQueConecta = make_pair(nodos[0],nodos[e2-f]);
+		cout<<"make pair"<<endl;
 	}else{
 	if (e2<=f){//cliente-fabrica
+		cout<<"cliente-fabrica"<<endl;
 		nodos[e1-f].rutasDe.push_back(nuevaRuta.numero);
 		nodos[0].rutasDe.push_back(nuevaRuta.numero);		
 		rutasPosibles.push_back(nuevaRuta);								//ya lo agrega en los 1ros posibles
-		nuevaRuta.nodosQueConecta = make_pair(nodos[e1],nodos[0]);
+		nuevaRuta.nodosQueConecta = make_pair(nodos[e1-f],nodos[0]);
 	}else{//cliente-cliente
+		cout<<"cliente-cliente"<<endl;
 		nodos[e1-f].rutasDe.push_back(nuevaRuta.numero);
 		nodos[e2-f].rutasDe.push_back(nuevaRuta.numero);
-		nuevaRuta.nodosQueConecta = make_pair(nodos[e1],nodos[e2]);
+		nuevaRuta.nodosQueConecta = make_pair(nodos[e1-f],nodos[e2-f]);
 	}
 }
 }
@@ -111,23 +119,23 @@ while(f != 0){
     int costoTotal=0;
 
     nodo fabricas;
+    fabricas.ID = 0;
     nodos.push_back(fabricas);				//el elemento 0 es el de las fabricas y el resto sigue la numeracion de c-f
-    for (int i=f+1; i<=f+c; ++i){										//para todos los clientes
+    for (int i=f; i<f+c; ++i){										//para todos los clientes
         nodo nuevoNodo;													//crea un nuevo nodo
         nuevoNodo.ID=i;													//cuya ID es un numero entre f+1 y c+f
         nodos.push_back(nuevoNodo);										//lo agrego al cjto de nodos (que esta ordenado)
     }
     assert(nodos.size()==c+1);
     
-    cin>>e1>>e2>>l;
     for (int i=0; i<r; ++i){//inserta las rutas en rutasTotales
+		cin>>e1>>e2>>l;
         if (e1>f || e2>f){//si ambos son menores (ie, conecta solo fabricas) no nos interesa hacer una ruta entre dos nodos con fabricas
 			ruta nuevaRuta;
 			nuevaRuta.numero=i;                     //a cada ruta la identificamos con nro (0<=numero<r)
 			nuevaRuta.peso=l;
             agregarRuta(nuevaRuta, nodos, rutasTotales, rutasPosibles, f, e1, e2);
         }
-        cin>>e1>>e2>>l;
     }
     
     for(int i=f+1; i<=f+c; ++i){//este es el ciclo posta del casi prim
