@@ -102,36 +102,8 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> consultora1(vector<vector<i
 
 		int proximo = agarraElMasCercano(adyacentesAlAGM, matrizAdy);
 
-		// TO DO
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-				assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-				assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-				assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-		assert(proximo != -1);
-
+		//assert(proximo != -1);
+		
 		adyacentesAlAGM[proximo].second = true; //al más cercano lo fijo.
 
 		//agrego esa arista fijada (ie los dos nodos que une) al AGM que devuelvo
@@ -171,11 +143,7 @@ tuple<int, vector<int>> BFSMasLejano(int inNodo, vector<vector<int>> & listaVeci
 		    //como es un arbol hay un único camino entre cualquier par de nodos, el único vecino que no debería
 		    //tener distancia infinita es el padre del actual, es decir por el cual llegamos al actual
 		    //y su distancia debería ser menor
-
-
-		    // TO DO
 		    assert(distAlInNodo[*it] == -1 || distAlInNodo[*it] < distAlInNodo[actual]+1);
-		   // assert(distAlInNodo[*it] == -1 || distAlInNodo[*it] < distAlInNodo[actual]);
 
 
 		    //si tienen distancia infinita es que todavía no los revisé, los agrego a la cola 
@@ -188,15 +156,6 @@ tuple<int, vector<int>> BFSMasLejano(int inNodo, vector<vector<int>> & listaVeci
 		//saco el que acabo de explorar de la cola para pasar a mirar el próximo
 		nodosAExplorar.pop();
 	}
-
-	/*
-	int outNodo = inNodo;
-	//ahora voy a agarrar el más lejano al original
-	for(vector<int>::iterator it = distAlInNodo.begin(); it != distAlInNodo.end(); ++it) {
-		if (distAlInNodo[*it] > distAlInNodo[outNodo]) {
-			outNodo = *it;
-		}
-	}*/
 	
 		
 	int outNodo = inNodo;
@@ -220,11 +179,6 @@ tuple<int, vector<int>> BFSMasLejano(int inNodo, vector<vector<int>> & listaVeci
 	//quiero terminar cuando llegue al nodo del que partí
 	while (distAlInNodo[actual] != 0) {
 		
-		// TO DO
-		//EL PROBLEMA ESTA ACA, EN EL FOR DE ABAJO, NO VEO PORQUE PERO SE ROMEEEEW
-		//EL PROBLEMA ESTA ACA, EN EL FOR DE ABAJO, NO VEO PORQUE PERO SE ROMEEEEW
-		//EL PROBLEMA ESTA ACA, EN EL FOR DE ABAJO, NO VEO PORQUE PERO SE ROMEEEEW
-
 		int anterior=outNodo;
 		for(vector<int>::iterator it = listaVecinosAGM[actual].begin(); it != listaVecinosAGM[actual].end(); ++it) {
 			if (distAlInNodo[*it] == distAlInNodo[actual]-1) {
@@ -256,21 +210,7 @@ int consultora2(vector<vector<int>> & listaVecinosAGM) {
 	std::vector<int> caminoMaximo = get<1>(rta2);
 
 	return caminoMaximo[caminoMaximo.size() / 2];
-/*
-//  TO DO
-JOOOOOOO, COMO HAGO SI HAY 2 CAMINOS MAXIMOS PARA AGARRAR EL NODO QUE VA MEJOR CON LOS 2?????
-JOOOOOOO, COMO HAGO SI HAY 2 CAMINOS MAXIMOS PARA AGARRAR EL NODO QUE VA MEJOR CON LOS 2?????
-JOOOOOOO, COMO HAGO SI HAY 2 CAMINOS MAXIMOS PARA AGARRAR EL NODO QUE VA MEJOR CON LOS 2?????
-JOOOOOOO, COMO HAGO SI HAY 2 CAMINOS MAXIMOS PARA AGARRAR EL NODO QUE VA MEJOR CON LOS 2?????
-JOOOOOOO, COMO HAGO SI HAY 2 CAMINOS MAXIMOS PARA AGARRAR EL NODO QUE VA MEJOR CON LOS 2?????
-JOOOOOOO, COMO HAGO SI HAY 2 CAMINOS MAXIMOS PARA AGARRAR EL NODO QUE VA MEJOR CON LOS 2?????
-FUNCAAAAA RE BIEN, PERO ACLARAR EN EL INFORME XQ
-FUNCAAAAA RE BIEN, PERO ACLARAR EN EL INFORME XQ
-FUNCAAAAA RE BIEN, PERO ACLARAR EN EL INFORME XQ
-FUNCAAAAA RE BIEN, PERO ACLARAR EN EL INFORME XQ
 
-FUNCAAAAA RE BIEN, PERO ACLARAR EN EL INFORME XQ
-*/
 }
 
 
@@ -302,23 +242,6 @@ int main() {
 		// como se que los enlaces tienen pesos positivos,
 		// si en la matriz hay un -1 es que no hay enlace entre esos servidores
 
-
-// TO DO
-// esto creo que me rompe cuando hago actualizar vecinos, no se si vale la pena ponerlo. Hay que probar
-//		for (int i=1; i<=cantServidores; ++i) {
-//			matrizAdy[i][i] = 0;
-//		}
-
-		// esto creo que me rompe cuando hago actualizar vecinos, no se si vale la pena ponerlo. Hay que probar
-//		for (int i=1; i<=cantServidores; ++i) {
-//			matrizAdy[i][i] = 0;
-//		}
-
-// esto creo que me rompe cuando hago actualizar vecinos, no se si vale la pena ponerlo. Hay que probar
-//		for (int i=1; i<=cantServidores; ++i) {
-//			matrizAdy[i][i] = 0;
-//		}
-
 		for (int i=1; i<=cantEnlaces; ++i) {
 			int s1 = 0;
 			int s2 = 0;
@@ -340,23 +263,7 @@ int main() {
 
 		int rtaConsultora2 = consultora2(listaVecinosAGM);
 
-		// TO DO
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
-		// AGM siempre m=n-1 no???????
 		cout << costoDelAGM << " " << rtaConsultora2 << " " << cantServidores-1 << " ";
-
 
 		for (int i=1; i<=cantServidores; ++i) {
 			for (int j=1; j<=cantServidores; ++j) {
@@ -365,8 +272,6 @@ int main() {
 				}
 			}
 		}
-
-
 
 	}
 }
