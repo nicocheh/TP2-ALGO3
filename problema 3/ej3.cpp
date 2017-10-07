@@ -4,12 +4,14 @@
 #include <cassert>
 
 #define infinito 32767
+#define fst first
+#define snd second
 
 using namespace std;
 
 struct nodo{
     int ID;
-    vector<ruta> rutasDe;
+    vector<int> rutasDe;
 };
 struct ruta{
 	int numero;		//numero esta entre [0, r)
@@ -17,43 +19,54 @@ struct ruta{
     pair<nodo,nodo> nodosQueConecta;
 };
 
-void agregarRuta(ruta nuevaRuta, vector<ruta>& rutasTotales, vector<ruta>& rutasPosibles, int f, int e1, int e2){
+void agregarRuta(ruta nuevaRuta, vector<nodo> nodos, vector<ruta>& rutasTotales, vector<ruta>& rutasPosibles, int f, int e1, int e2){
 	rutasTotales.push_back(nuevaRuta);
     if (e1<=f){//fabrica-cliente
-		nodos.[0].rutasDe.push_back(nuevaRuta);
-		nodos.[e2-f].rutasDe.push_back(nuevaRuta);
-		rutasPosibles.push_back(nuevaRuta);								//ya lo agrega en los 1ros posibles
+		nodos[0].rutasDe.push_back(nuevaRuta.numero);
+		nodos[e2-f].rutasDe.push_back(nuevaRuta.numero);
+		rutasPosibles.push_back(nuevaRuta);							//ya lo agrega en los 1ros posibles
+		nuevaRuta.nodosQueConecta = make_pair(nodos[0],nodos[e2]);
 	}else{
 	if (e2<=f){//cliente-fabrica
-		nodos.[e1-f].rutasDe.push_back(nuevaRuta);
-		nodos.[0].rutasDe.push_back(nuevaRuta);		
+		nodos[e1-f].rutasDe.push_back(nuevaRuta.numero);
+		nodos[0].rutasDe.push_back(nuevaRuta.numero);		
 		rutasPosibles.push_back(nuevaRuta);								//ya lo agrega en los 1ros posibles
+		nuevaRuta.nodosQueConecta = make_pair(nodos[e1],nodos[0]);
 	}else{//cliente-cliente
-		nodos.[e1-f].rutasDe.push_back(nuevaRuta);
-		nodos.[e2-f].rutasDe.push_back(nuevaRuta);
+		nodos[e1-f].rutasDe.push_back(nuevaRuta.numero);
+		nodos[e2-f].rutasDe.push_back(nuevaRuta.numero);
+		nuevaRuta.nodosQueConecta = make_pair(nodos[e1],nodos[e2]);
 	}
+}
 }
 
 int minPeso(vector<ruta> rutasPosibles){//devuelve el numero de la ruta con menos peso
 	int res;
 	int pesoMin= infinito;
-	for (int i=0; i<rutas.size(); ++i){
-		if (rutas[i].peso<pesoMin){
-			res=rutas[i].numero;
-			pesoMin=rutas[i].peso;
+	for (int i=0; i<rutasPosibles.size(); ++i){
+		if (rutasPosibles[i].peso<pesoMin){
+			res=rutasPosibles[i].numero;
+			pesoMin=rutasPosibles[i].peso;
 		}
 	}
 	return res;
 }
 
 bool estaEnAGM(vector<nodo> nodosAGM, nodo ciudad){
-    return find(nodosAGM.begin(), nodosAGM.end(), ciudad) != nodosAGM.end();
+	bool res=false;
+	
+	int i=0; 
+	while (i<nodosAGM.size() && not res){
+		if (ciudad.ID==nodosAGM[i].ID) res=true;
+		++i;
+	}
+	return res;
 }
 
-void eliminarRutas(ruta rutaMinima, vector<ruta>& rutasPosibles, bool agreguePrimera){ //eliminar de rutasPosibles las asociadas a la ciudad nueva con las ciudades viejas
+void eliminarRutas(vector<ruta> rutasTotales, vector<nodo> nodosAGM, ruta rutaMinima, vector<ruta>& rutasPosibles, bool agreguePrimera){ //eliminar de rutasPosibles las asociadas a la ciudad nueva con las ciudades viejas
     if (agreguePrimera){
         for (int j=0; j<rutaMinima.nodosQueConecta.fst.rutasDe.size(); ++j){//recorre las rutas que salen de la nueva ciudad que agregamos
-            if (estaEnAGM(nodosAGM, rutaMinima.nodosQueConecta.fst.rutasDe[j].nodosQueConecta.fst) && estaEnAGM(nodosAGM, rutaMinima.nodosQueConecta.fst.rutasDe[j].nodosQueConecta.snd)){
+            if (estaEnAGM(nodosAGM, rutasTotales[rutaMinima.nodosQueConecta.fst.rutasDe[j]].nodosQueConecta.fst) && estaEnAGM(nodosAGM, rutasTotales[rutaMinima.nodosQueConecta.fst.rutasDe[j]].nodosQueConecta.snd)){
             //si la j-esima ruta que sale del nuevo nodo que agregamos une dos nodos que estan en el AGM
                 //entonces borramos esa ruta de las rutasPosibles
                 rutasPosibles.erase(rutasPosibles.begin()+j-1);
@@ -61,7 +74,7 @@ void eliminarRutas(ruta rutaMinima, vector<ruta>& rutasPosibles, bool agreguePri
         }
     }else{
         for (int j=0; j<rutaMinima.nodosQueConecta.snd.rutasDe.size(); ++j){
-            if (estaEnAGM(nodosAGM, rutaMinima.nodosQueConecta.snd.rutasDe[j].nodosQueConecta.fst) && estaEnAGM(nodosAGM, rutaMinima.nodosQueConecta.snd.rutasDe[j].nodosQueConecta.snd)){
+            if (estaEnAGM(nodosAGM, rutasTotales[rutaMinima.nodosQueConecta.snd.rutasDe[j]].nodosQueConecta.fst) && estaEnAGM(nodosAGM, rutasTotales[rutaMinima.nodosQueConecta.snd.rutasDe[j]].nodosQueConecta.snd)){
             //si la j-esima ruta que sale del nuevo nodo que agregamos une dos nodos que estan en el AGM
                 //entonces borramos esa ruta de las rutasPosibles
                 rutasPosibles.erase(rutasPosibles.begin()+j-1);
@@ -112,8 +125,7 @@ while(f != 0){
 			ruta nuevaRuta;
 			nuevaRuta.numero=i;                     //a cada ruta la identificamos con nro (0<=numero<r)
 			nuevaRuta.peso=l;
-			nuevaRuta.nodosQueConecta(make_pair(e1,e2));
-            agregarRuta(nuevaRuta, rutasTotales, rutasPosibles, f, e1, e2);
+            agregarRuta(nuevaRuta, nodos, rutasTotales, rutasPosibles, f, e1, e2);
         }
         cin>>e1>>e2>>l;
     }
@@ -134,7 +146,7 @@ while(f != 0){
             nodosAGM.push_back(rutasTotales[numRuta].nodosQueConecta.fst);
             agreguePrimera=true;
         }
-        eliminarRutas(rutasTotales[numRuta], rutasPosibles, agreguePrimera);
+        eliminarRutas(rutasTotales, nodosAGM, rutasTotales[numRuta], rutasPosibles, agreguePrimera);
         /*
          * tomar el e de minimo peso de rutas
          * agregar e a rutasAGM
@@ -148,7 +160,7 @@ while(f != 0){
 
     cout<<costoTotal<<" "<<rutasAGM.size();
     for (int k=0; k<rutasAGM.size(); ++k){
-        cout<<" "<<rutasAGM[k].nodosQueConecta.fst<<" "<<rutasAGM[k].nodosQueConecta.snd;
+        cout<<" "<<rutasAGM[k].nodosQueConecta.fst.ID<<" "<<rutasAGM[k].nodosQueConecta.snd.ID;
     }
     cout<<endl;
 cin>>f>>c>>r;
