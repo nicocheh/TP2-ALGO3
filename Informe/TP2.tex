@@ -1,4 +1,4 @@
-\documentclass[A4paper,oneside,fleqn,10pt]{article}
+\documentclass[A4paper,oneside,fleqn,11pt]{article}
 
 % This first part of the file is called the PREAMBLE. It includes
 % customizations and command definitions. The preamble is everything
@@ -235,12 +235,59 @@ Cabe aclarar que para el análisis de complejidad tomaremos $n$ como la cantidad
 Más aún esto se ratifica si miramos el pseudocódigo ya que realizamos todas operaciones que son $\mathcal{O}(n)$ u $\mathcal{O}(n)$ fuera del ciclo (inicialización o recorrido de vectores de tamaño a lo sumo $n$). Veamos que sucede dentro del ciclo: tenemos dos ciclos anidados que se ejecuta cada uno  a lo sumo $n$ veces, por ende todo se ejecuta a lo sumo $n^2$ veces y todo lo de adentro son operaciones $\mathcal{O}(1)$ (checkear si $q-1$ esta en $anteriorlista[h]$ es $\mathcal{O}(1)$ porque inserto siempre ordenado y si es un elemento, es el ultimo; lo mismo vale para checkear si $q-1$ esta en $anteriorlista[elegido]$).Luego salimos del segundo for (el anidado)y cabe aclarar que copiar el vector $actualcosto$ y $actuallista$ no es $\mathcal{O}(1)$ sino $\mathcal{O}(n)$, pero esta solo en uno de los ciclos, por lo que se repite $n$ veces y aporta una complejidad de $n* \mathcal{O}(n)= \mathcal{O}(n^2)$. Por ende en el ciclo tenemos $n^2 *\mathcal{O}(1)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$ y sumado a lo que esta fuera del ciclo nos da $\mathcal{O}(n)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$
 
 \subsection{Experimentación}
-\subsubsection{Contexto}
 
-La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++) y luego se dividìa el delta de ticks sobre CLOCKS\_PER\_SEC. En todos los experimentos el tiempo se mide en segundos. 
+
+\subsubsection{Contexto}
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). 
+El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++) y luego se dividìa el delta de ticks sobre CLOCKS\_PER\_SEC. En todos los experimentos el tiempo se mide en segundos. 
+\subsubsection{Experimentos}
+
+\begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{r.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de trabajos para instancias aleatorias.}
+\end{wrapfigure}
+Para empezar a experimentar, se corrió el programa con una serie de $2000$ casos generados aleatoriamente donde aleatoriamente fue con una cantidad de trabajos aleatoria entre $1$ y $10^3$  con una distribución uniforme 
+\footnote{ se utilizó la función rand() de librerías de C++ en el rango correspondiente, para mas detalle ver http://en.cppreference.com/w/cpp/numeric/random/rand }
+en dicho intervalo. Para la matriz de costos, también se tomo para cada celda un costo aleatorio generado de la misma forma con un costo entre $1$ y $10^6$. A continuación graficamos estas instancias:
+
+
+
+Como podemos ver en la Figura 1, pareciera haber un gráfico semejante a una parábola lo que ratificaría la relación cuadrática que propusimos entre la cantidad de trabajos y la cantidad de operaciones realizadas. Sin embargo no nos da del todo información para aseverar eso este gráfico,ya que podría tratarse de alguna función con crecimiento similar. Es por esto que se realizó un gráfico de la relación entre tiempo de ejecución y $trabajos^2$ y si la relación es efectivamente cuadrática este gráfico debería ser constante. Como se puede ver en el gráfico de la figura 2 efectivamente se trata de una constante, lo que verifica nuestra hipótesis y complejidad teórica de la relación cuadrática de dependencia entre la cantidad de operaciones y de trabajos. Podemos observar que no pareciera haber practicamente dispersión, ni mejores ni peores casos, analizaremos esto luego.
+
+\break
+
+\begin{wrapfigure}{l}{0.25\textwidth}
+\centering
+\includegraphics[width=0.25\textwidth]{Escuad.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de trabajos al cuadrado para instancias aleatorias.}
+\end{wrapfigure}
+
+Primero, debemos notar que segun el análisis realizado, en el tiempo de ejecución solo influye la cantidad de trabajos, más alla del costo que pueda tener cada trabajo ya que en lo unico que influye es en la suma (y como trabajamos con enteros acotados, no influye considerablemente en el tiempo de ejecución la suma). Por esto se ejecutaron las mismas $2000$ instancias que se ejecutaron sumando una constante $k$ que se movio entre $10^i$ con $i=1,2,3,4,5,6,7,8,9$ a todo costo y no cambió considerablemente el tiempo de ejecución (notar que no cambia el resultado de cuales trabajos quedan en una máquina respecto de la ejecución respecto de no haber sumado la constante) en todos los $i$ como vemos a continuación en los casos $i=4$ e $i=8$ en las figuras 3, 4 y 5
+
+\vspace{5mm}
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.4]{r4.png}
+  \includegraphics[scale=0.4]{r8.png}
+  \includegraphics[scale=0.4]{r48.png}
+  
+\end{figure}
+\scriptsize{Figura 3: Gráfico de segundos de ejecución en función de cantidad de trabajos par instancias generadas aleatoriamente, sumando $k=10^4$ en costos}
+
+\scriptsize{Figura 4: Figura 3: Gráfico de segundos de ejecución en función de cantidad de trabajos par instancias generadas aleatoriamente, sumando $k=10^8$ en costos}
+
+\scriptsize{Figura 5: Figura 3: Gráfico de segundos de ejecución en función de cantidad de trabajos par instancias generadas aleatoriamente (en azul), sumando $k=10^4$ (amarillo) y sumando $k=10^8$ (rojo) en costos}
+\normalsize
+
+Podemos ver que en todos los casos la dependencia sigue siendo, en rasgos generales la misma, cuadrática (se verifico haciendo el gráfico de $segundos / trabajos^2$ para cada i, los excluimos por una cuestión de espacio, pero todos resultaron constantes). Más aún al comparar instancias de diversos $i$ podemos ver que tienen similar tiempo de ejecución lo que nos indica que (sumado a que tomamos costos aleatorios) no hay influencia de los costos en el tiempo de ejecución, lo que tiene sentido por lo que hace el algoritmo y la complejidad teorica calculada
+
+
+Como decidimos implementar el algortimo de forma Bottom-Up siempre calculamos todos los subproblemas, esto es una ventaja en el sentido de que siempre todas las instancias de igual cantidad de trabajos tardan lo mismo, como se vio a lo largo de esta experimentacion, por lo que no hay mejores ni peores casos. Al ver la implementación y el pseudocódigo podemos ver que lo que realizamos depende exclusivamente de la cantidad de trabajos total (los costos solo cambian el resultado de cada cuenta, pero no la cantidad de operaciones ni su orden). También tomar esta decisión de implementar Bottom-Up nos permitió ahorrar en memoria ya que no requeríamos memorizar todos los subproblemas, sino que solo utilizabamos la información del subproblema anterior. La única desventaja es que a veces respecto de Top-Down, se calculan todos los subproblemas y no solo los necesarios. Pero si nos detenemos a ver la f que definimos al explicar el algoritmo (como ya también explicamos antes) siempre se van a calcular todos los subprobemas pues son todos necesarios, por ende esa tampoco es una ventaja del Top-Down en este caso. Todo esto se pudo ver experimentalmente ya que todas las instancias tuvieron un tiempo de ejecución muy similar y la dispersión fue practicamente nula.
 
 \subsection{Conclusiones}
 
+Concluimos entonces que la complejidad es de $\mathcal{O}(n^2)$ como se vio teóricamente y además se pudo verificar de forma experimental. Como se analizó al implementar bottom-up se resolvían todos los subproblemas siempre, por lo que (lo que también se vió experimentalmente) no había diferencia entre casos, no había ni peores ni mejores casos, todas las instancias de igual cantidad de trabajos tomaban, practicamente, el mismo tiempo de ejecución. Más aún se vió también experimentalmente que (como se esperaba y se deducía del algoritmo) no había influencia alguna de los valores de los costos en el tiempo de ejecución.
 
 \section{Problema 2.1}
 \section{Problema 2.2}
