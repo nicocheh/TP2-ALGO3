@@ -106,7 +106,7 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> consultora1(vector<vector<i
 	// en la iteración i empiezo con i nodos y termino con i+1 nodos. En la iteración
 	// cantServidores-1 tengo un arbol con todos los nodos de mi grafo original.
 	for (int i=1; i<=cantServidores-f; ++i) {
-
+		//REPITO TANTAS VECES COMO CLIENTES HAY
 		int proximo = agarraElMasCercano(adyacentesAlAGM, matrizAdy,f);
 
 		//assert(proximo != -1);
@@ -157,6 +157,9 @@ int main(){
 		auto matrizIncidenciaG = get<2>(rtaConsultora1);
 
 		cout << costoDelG << " ";
+		
+		//ACA HICE ESTE FOR SUPER CABEZA, PARA CONTAR CUANTOS HAY EN EL CAMINO, COPIE LO DE ABAJO Y CONTE
+		//Y DIVIDO POR DOS
 		int cantaristas=0;
 		for (int i=1; i<=f+c; ++i) {
 			for (int j=1; j<=f+c; ++j) {
