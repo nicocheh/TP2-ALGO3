@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.17)  8 OCT 2017 00:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.17)  8 OCT 2017 12:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1427,7 +1427,7 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 243.
 
-<r.png, id=194, 381.425pt x 266.9975pt>
+<r.png, id=219, 381.425pt x 266.9975pt>
 File: r.png Graphic file (type png)
  <use r.png>
 Package pdftex.def Info: r.png used on input line 247.
@@ -1462,7 +1462,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 258.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 258.
-[5 <./r.png>] <Escuad.png, id=205, 411.5375pt x 266.9975pt>
+[5 <./r.png>] <Escuad.png, id=230, 411.5375pt x 266.9975pt>
 File: Escuad.png Graphic file (type png)
  <use Escuad.png>
 Package pdftex.def Info: Escuad.png used on input line 262.
@@ -1472,19 +1472,19 @@ Underfull \hbox (badness 2617) in paragraph at lines 263--263
 \OT1/cmr/m/n/10.95 gun-dos de eje-cu-ci^^Son en
  []
 
-<r4.png, id=206, 390.45876pt x 266.9975pt>
+<r4.png, id=231, 390.45876pt x 266.9975pt>
 File: r4.png Graphic file (type png)
  <use r4.png>
 Package pdftex.def Info: r4.png used on input line 271.
 (pdftex.def)             Requested size: 156.18073pt x 106.79709pt.
 
-<r8.png, id=207, 390.45876pt x 266.9975pt>
+<r8.png, id=232, 390.45876pt x 266.9975pt>
 File: r8.png Graphic file (type png)
  <use r8.png>
 Package pdftex.def Info: r8.png used on input line 272.
 (pdftex.def)             Requested size: 156.18073pt x 106.79709pt.
 
-<r48.png, id=208, 381.425pt x 266.9975pt>
+<r48.png, id=233, 381.425pt x 266.9975pt>
 File: r48.png Graphic file (type png)
  <use r48.png>
 Package pdftex.def Info: r48.png used on input line 273.
@@ -1733,18 +1733,6 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 340.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 341.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 341.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 341.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 341.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 341.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 341.
-Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 342.
 Package babel Info: Redefining spanish shorthand >>
 (babel)             in language  on input line 342.
@@ -1756,18 +1744,6 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 342.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 342.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 343.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 343.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 343.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 343.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 343.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 343.
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 344.
 Package babel Info: Redefining spanish shorthand >>
@@ -1781,68 +1757,131 @@ Package babel Info: Redefining spanish shorthand "!
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 344.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 344.
+(babel)             in language  on input line 352.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 344.
+(babel)             in language  on input line 352.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 344.
+(babel)             in language  on input line 352.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 344.
+(babel)             in language  on input line 352.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 344.
+(babel)             in language  on input line 352.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 344.
+(babel)             in language  on input line 352.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 355.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 355.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 355.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 355.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 355.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 355.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 357.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 357.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 357.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 357.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 357.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 357.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 360.
  [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 344.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 344.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 360.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 360.
+ [10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 360.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 360.
  (./TP2.aux
 LaTeX Info: Redefining \. on input line 23.
 LaTeX Info: Redefining \% on input line 23.
 )
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 344.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 344.
-
-
-Package rerunfilecheck Warning: File `TP2.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `TP2.out':
-(rerunfilecheck)             Before: 724937A2F2271FFE3795370E5E0F1527;1614
-(rerunfilecheck)             After:  0DF06EBBD7DF206AD371C20D8A7B4788;1818.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 360.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 360.
+Package rerunfilecheck Info: File `TP2.out' has not changed.
+(rerunfilecheck)             Checksum: 53ABE650AA8F1F2D2E55BFEC9C7FB6F8;1957.
  ) 
 Here is how much of TeX's memory you used:
- 20906 strings out of 493029
- 383159 string characters out of 6136234
- 579934 words of memory out of 5000000
- 23981 multiletter control sequences out of 15000+600000
+ 20913 strings out of 493029
+ 383290 string characters out of 6136234
+ 579935 words of memory out of 5000000
+ 23986 multiletter control sequences out of 15000+600000
  15185 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  61i,18n,84p,2169b,599s stack positions out of 5000i,500n,10000p,200000b,80000s
-pdfTeX warning (dest): name{section.4} has been referenced but does not exist
-, replaced by a fixed one
-
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on TP2.pdf (9 pages, 273649 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on TP2.pdf (10 pages, 277801 bytes).
 PDF statistics:
- 310 PDF objects out of 1000 (max. 8388607)
- 268 compressed objects within 3 object streams
- 69 named destinations out of 1000 (max. 500000)
- 238 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 335 PDF objects out of 1000 (max. 8388607)
+ 292 compressed objects within 3 object streams
+ 71 named destinations out of 1000 (max. 500000)
+ 278 words of extra memory for PDF output out of 10000 (max. 10000000)
 

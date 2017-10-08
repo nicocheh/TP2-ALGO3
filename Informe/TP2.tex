@@ -293,7 +293,7 @@ Concluimos entonces que la complejidad es de $\mathcal{O}(n^2)$ como se vio teó
 \subsection{El Problema}
 
 \subsubsection{Descripcion}
-Si nos abstraemos de los detalles del problema, este nos describe una situación en la cual tenemos un grafo $G$ (no orientado) conexo con pesos no negativos. Lo que nos piden en la parte 1 del problema es encontrar un conjunto de aristas $E'$ del grafo que cumpla que la suma de sus costos sea la mínima posible (minimizar $\sum_{e \in E'} {peso(e)}$ y que el subgrafo $H$ con nodos $V(G)$ y aristas $E'$ sea conexo. En la parte dos
+Si nos abstraemos de los detalles del problema, este nos describe una situación en la cual tenemos un grafo $G$ (no orientado) conexo con pesos no negativos. Lo que nos piden en la parte 1 del problema es encontrar un conjunto de aristas $E' \subseteq X(G)$ del grafo que cumpla que la suma de sus costos sea la mínima posible (minimizar $\sum_{e \in E'} {peso(e)}$ y que el subgrafo $H$ con nodos $V(G)$ y aristas $E'$ sea conexo. En la parte dos
 del problema nos piden, dado un $E'$ que cumple lo antes descripto, elegir un nodo $v \in V(G)$ tal que si consideramos el subgrafo $H$ sin pesos, minimice la máxima distancia de $v$ a otro nodo (minimice $\max_{w\in V(H)}{distancia(v,w)}$).
 
 \subsubsection{Ejemplos}
@@ -338,7 +338,23 @@ Ejecutamos dos veces BFS, que como bien sabemos es $\mathcal{O} (n+m)$ (ejecutar
 \section{Problema 3}
 
 \subsection{El Problema}
+
+\subsubsection{Descripcion}
+Planteado de otra forma, la situación que tenemos es un grafo (no orientado) con pesos positivos en las aristas $G$ en el cual tenemos una particion de $V(G)={F,C}$ dada y queremos hallar un subconjunto de aristas $E' \subseteq X(G)$ que tenga peso minimo (o sea minimizar $\sum_{e \in E'} {peso(e)}$) y que cumpla que para todo nodo en $C$ existe un camino a algun nodo en $F$ (o sea, para toda componente conexa $W$ del  grafo $H=(V(G),E')$,  $\exists v \in F$). Nos piden hallar ese costo minimo (i.e $\sum_{e \in E'} {peso(e)}$) cuantas y qué aristas lo logran.
+\subsubsection{Ejemplos}
+
+\begin{itemize}
+\item Consideremos $C_{n}$ (supongamos n par) con pesos asociados todos iguales y bipartito con $F$ y $C$ los elementos de la partición (o sea, en el ciclo, si lo recorremos en algun sentido, hay un nodo de $F$, luego uno de $C$, luego uno de $F$ y así sucesivamente). Es claro que debemos minimizar la cantidad de aristas (todas pesan lo mismo y tienen costo positivo) y como tenemos $|C|=n/2$ necesitaremos al menos $n/2$ aristas y consideramos alguna de las que la unen con alguno de sus vecinos para cada elemento de $C$. Así tenemos nuestro conjunto de aristas que minimizan la suma (será $k*(n/2)$ si k es el peso de cada arista), de hecho es claro en este ejemplo que el conjunto de aristas que minimiza la suma no es único (de hecho hay $2^n/2$ -pues para cada elemento de $C$ elijo una de las dos aristas que inciden en el)
+
+\item Consideremos ahora un grafo compuesto de $q$ componentes conexas donde cada una es un $C_{n}$ como mostramos en el ejemplo anterior (con n par para toda componente conexa y con un elemento de $C$ y uno de $F$ alternadamente y pesos iguales $k$). Para minimizar la cantidad de aristas, debemos resolver el problema en cada una de las componentes conexas, pues la única forma de llegar a un elemento de una componente conexa es desde alguna fábrica que este en esa componente. Luego, como vimos cada componente se resuelve con $k*(n/2)$ de peso total, por ende la solución total tendra $q*k*(n/2)$
+\end{itemize}
+
 \subsection{El Algoritmo}
+
+
 \subsection{Complejidad}
+
 \subsection{Experimentación}
+
+
 \end{document}
