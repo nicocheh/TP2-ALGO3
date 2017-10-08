@@ -16,27 +16,27 @@
 using namespace std;
 
 
-void actualizoVecinos(int proximo, int cantServidores, vector<vector<int>> & matrizAdy, vector<pair<int,bool>> & adyacentesAlAGM) {
+void actualizoVecinos(int proximo, int n, vector<vector<int>> & matrizAdy, vector<pair<int,bool>> & adyacentesAlG) {
 
-	for (int i=1; i<=cantServidores; ++i) {
+	for (int i=1; i<=n; ++i) {
 		
 		//solo tiene sentido actualizar los vecinos, ie que la matriz de adyacencia no tenga -1
 		if (matrizAdy[proximo][i] != -1) {
 
 			int distanciaNueva = matrizAdy[proximo][i];
 
-			if (adyacentesAlAGM[i].first == -1) {
-				adyacentesAlAGM[i].first = proximo;
+			if (adyacentesAlG[i].first == -1) {
+				adyacentesAlG[i].first = proximo;
 			}
 
-			int distanciaVieja = matrizAdy[i][adyacentesAlAGM[i].first];
+			int distanciaVieja = matrizAdy[i][adyacentesAlG[i].first];
 
 			//actualizo la distancia del vecino este.
 			if (distanciaVieja == -1) {
-				adyacentesAlAGM[i].first = proximo;
+				adyacentesAlG[i].first = proximo;
 			} else {
 				if (distanciaNueva < distanciaVieja) {
-					adyacentesAlAGM[i].first = proximo;
+					adyacentesAlG[i].first = proximo;
 				}
 			}
 		}
@@ -46,20 +46,20 @@ void actualizoVecinos(int proximo, int cantServidores, vector<vector<int>> & mat
 
 
 
-int agarraElMasCercano(vector<pair<int,bool>> & adyacentesAlAGM, vector<vector<int>> & matrizAdy, int f) {
+int agarraElMasCercano(vector<pair<int,bool>> & adyacentesAlG, vector<vector<int>> & matrizAdy, int f) {
 
 	int nuevoNodo = -1;
-	// el nuevo nodo es el que voy a agregar al AGM, el que está más cerca.
+	// el nuevo nodo es el que voy a agregar al G, el que está más cerca.
 
-	for (int i=f+1; i<adyacentesAlAGM.size(); ++i) {
+	for (int i=f+1; i<adyacentesAlG.size(); ++i) {
 		//AL AGARARRAR EL MAS CERCANO SOLO AGARRO EL QUE SEA CLIENTE
-		if (adyacentesAlAGM[i].second == false && adyacentesAlAGM[i].first != -1) {
+		if (adyacentesAlG[i].second == false && adyacentesAlG[i].first != -1) {
 
 			if (nuevoNodo == -1) {
 				nuevoNodo = i;
 			} else {
-				int candidatoACercano = matrizAdy[i][adyacentesAlAGM[i].first];
-				int masCercanoActual = matrizAdy[nuevoNodo][adyacentesAlAGM[nuevoNodo].first];
+				int candidatoACercano = matrizAdy[i][adyacentesAlG[i].first];
+				int masCercanoActual = matrizAdy[nuevoNodo][adyacentesAlG[nuevoNodo].first];
 				if (candidatoACercano < masCercanoActual) {
 					nuevoNodo = i;
 				}
@@ -74,59 +74,59 @@ int agarraElMasCercano(vector<pair<int,bool>> & adyacentesAlAGM, vector<vector<i
 }
 
 
-// la consultora1 va a usar el algoritmo de prim para devolver el AGM de este grafo.
+// la consultora1 va a usar el algoritmo de prim para devolver el G de este grafo.
 // lo devuelve en forma de listas de adyacencia para facilitarle el trabajo a la consultora 2.
-tuple<vector<vector<int>>, int, vector<vector<int>>> consultora1(vector<vector<int>> & matrizAdy, int cantServidores, int f) {
+tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vector<int>> & matrizAdy, int n, int f) {
 
-	// el -1 significa que no encontré ningun nodo en mi AGM que sea adyacente al nodo i.
-	// el int es el nodo del AGM vecino al nodo i, el bool es para marcar si i está en el AGM o todavía no
-	// (i, adyacentesAlAGM[i].first) define la arista que estoy agregando al AGM
-	vector<pair<int, bool>> adyacentesAlAGM(cantServidores+1, make_pair(-1, false));
+	// el -1 significa que no encontré ningun nodo en mi G que sea adyacente al nodo i.
+	// el int es el nodo del G vecino al nodo i, el bool es para marcar si i está en el G o todavía no
+	// (i, adyacentesAlG[i].first) define la arista que estoy agregando al G
+	vector<pair<int, bool>> adyacentesAlG(n+1, make_pair(-1, false));
 	// acá voy a ir buscando el nodo a menor distancia (ie la arista más chica con un nodo
 	// ya pintado y el otro no) para agregar en cada paso.
 
 
 	// este es el arbol que devuelvo en forma de lista de adyacencias
-	vector<vector<int>> listaVecinosAGM(cantServidores+1);
+	vector<vector<int>> listaVecinosG(n+1);
 
 	// esta representación del arbol la devuelvo para que sea más facil coutear las aristas como las piden.
 	// como es un arbol se que la cantidad de enlaces no es mayor a la cantidad de servidores
-	vector<vector<int>> matrizIncidenciaAGM(cantServidores+1, vector<int>(cantServidores+1, 0));
+	vector<vector<int>> matrizIncidenciaG(n+1, vector<int>(n+1, 0));
 
 
 	// agrego un nodo cualquiera y actualizo todos sus vecinos
 	for (int j=1;j<=f;++j){
-		adyacentesAlAGM[j] = make_pair(1, true);
-		actualizoVecinos(j, cantServidores, matrizAdy, adyacentesAlAGM);
+		adyacentesAlG[j] = make_pair(1, true);
+		actualizoVecinos(j, n, matrizAdy, adyacentesAlG);
 		//ACA PONGO COMO INICIALES A TODOS LOS QUE SON FABRICAS
 	}
 
-	int costoDelAGM = 0;
+	int costoDelG = 0;
 
 	// en la iteración i empiezo con i nodos y termino con i+1 nodos. En la iteración
 	// cantServidores-1 tengo un arbol con todos los nodos de mi grafo original.
-	for (int i=1; i<=cantServidores-f; ++i) {
+	for (int i=1; i<=n-f; ++i) {
 		//REPITO TANTAS VECES COMO CLIENTES HAY
-		int proximo = agarraElMasCercano(adyacentesAlAGM, matrizAdy,f);
+		int proximo = agarraElMasCercano(adyacentesAlG, matrizAdy,f);
 
 		//assert(proximo != -1);
 		
-		adyacentesAlAGM[proximo].second = true; //al más cercano lo fijo.
+		adyacentesAlG[proximo].second = true; //al más cercano lo fijo.
 
-		//agrego esa arista fijada (ie los dos nodos que une) al AGM que devuelvo
-		listaVecinosAGM[proximo].push_back(adyacentesAlAGM[proximo].first);
-		listaVecinosAGM[adyacentesAlAGM[proximo].first].push_back(proximo);
+		//agrego esa arista fijada (ie los dos nodos que une) al G que devuelvo
+		listaVecinosG[proximo].push_back(adyacentesAlG[proximo].first);
+		listaVecinosG[adyacentesAlG[proximo].first].push_back(proximo);
 
-		costoDelAGM = costoDelAGM + matrizAdy[proximo][adyacentesAlAGM[proximo].first];
+		costoDelG = costoDelG + matrizAdy[proximo][adyacentesAlG[proximo].first];
 
-		matrizIncidenciaAGM[i][proximo] = 1;
-		matrizIncidenciaAGM[i][adyacentesAlAGM[proximo].first] = 1;
+		matrizIncidenciaG[i][proximo] = 1;
+		matrizIncidenciaG[i][adyacentesAlG[proximo].first] = 1;
 
-		actualizoVecinos(proximo, cantServidores, matrizAdy, adyacentesAlAGM);
+		actualizoVecinos(proximo, n, matrizAdy, adyacentesAlG);
 	}
 
 
-	return make_tuple(listaVecinosAGM, costoDelAGM, matrizIncidenciaAGM);
+	return make_tuple(listaVecinosG, costoDelG, matrizIncidenciaG);
 }
 
 //BASICAMENTE LO QUE HAGO ES MANDARLE EN VEZ DE CANT DE SERVIDORES F+C
@@ -151,10 +151,10 @@ int main(){
 		}
 		
 		
-		auto rtaConsultora1 = consultora1(matrizAdy,f+c, f);		
-		auto listaVecinosG = get<0>(rtaConsultora1);
-		auto costoDelG = get<1>(rtaConsultora1);
-		auto matrizIncidenciaG = get<2>(rtaConsultora1);
+		auto resPrim = PrimModificado(matrizAdy,f+c, f);		
+		auto listaVecinosG = get<0>(resPrim);
+		auto costoDelG = get<1>(resPrim);
+		auto matrizIncidenciaG = get<2>(resPrim);
 
 		cout << costoDelG << " ";
 		
