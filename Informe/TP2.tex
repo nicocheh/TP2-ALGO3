@@ -289,8 +289,56 @@ Como decidimos implementar el algortimo de forma Bottom-Up siempre calculamos to
 
 Concluimos entonces que la complejidad es de $\mathcal{O}(n^2)$ como se vio teóricamente y además se pudo verificar de forma experimental. Como se analizó al implementar bottom-up se resolvían todos los subproblemas siempre, por lo que (lo que también se vió experimentalmente) no había diferencia entre casos, no había ni peores ni mejores casos, todas las instancias de igual cantidad de trabajos tomaban, practicamente, el mismo tiempo de ejecución. Más aún se vió también experimentalmente que (como se esperaba y se deducía del algoritmo) no había influencia alguna de los valores de los costos en el tiempo de ejecución.
 
-\section{Problema 2.1}
-\section{Problema 2.2}
+\section{Problema 2}
+\subsection{El Problema}
+
+\subsubsection{Descripcion}
+Si nos abstraemos de los detalles del problema, este nos describe una situación en la cual tenemos un grafo $G$ (no orientado) conexo con pesos no negativos. Lo que nos piden en la parte 1 del problema es encontrar un conjunto de aristas $E'$ del grafo que cumpla que la suma de sus costos sea la mínima posible (minimizar $\sum_{e \in E'} {peso(e)}$ y que el subgrafo $H$ con nodos $V(G)$ y aristas $E'$ sea conexo. En la parte dos
+del problema nos piden, dado un $E'$ que cumple lo antes descripto, elegir un nodo $v \in V(G)$ tal que si consideramos el subgrafo $H$ sin pesos, minimice la máxima distancia de $v$ a otro nodo (minimice $\max_{w\in V(H)}{distancia(v,w)}$).
+
+\subsubsection{Ejemplos}
+\begin{itemize}
+
+\item Si consideramos $K_{n}$  (el grafo completo de n vertices) con pesos constantes, todos 1 por ejemplo, la solución será cualquier conjunto de aristas que conecte todos los vertices (son al menos $n-1$ aristas) y con exactamente $n-1$ aristas se alcanza el minimo (pues cada arista es de peso positivo, si no tuviese la minima cantidad de aristas saco una y disminute el peso). Así, la solución tendra peso $(n-1)*1=n-1$ y podemos elegir tales aristas que cumplan que el subgrafo sea conexo (tomo la arista $(i,i+1)$ con $i=1,2,...,n-1$ donde los nodos estan numerados $1,...,n$). Esta sería entonces una solución posible
+\item Si consideramos $C_{n}$ (el ciclo simple de n vertices) con pesos todos distintos positivos, la solución debe tener la minima cantidad de aristas posibles (pues cada arista es de peso positivo, si no tuviese la minima cantidad de aristas saco una y disminute el peso) y para que sea conexo estas son $n-1$. Luego basta excluir solo una arista y como quiero minimizar el peso y saque cual saque queda conexo, saco la de mayor peso y ya (es unica la solución en este caso, pues son todos distintos y la  arista de peso maximo es única). Las aristas buscadas serán todas menos la excluida y el peso, la suma de sus pesos.
+
+\end{itemize}
+
+
+\subsection{Consultora 1}
+
+\subsubsection{El algoritmo}
+Si nos detenemos a evaluar lo que pide la primer parte del problema, notamos que la solución debe permitir que sea conexo el grafo (debe tener $n-1$ aristas al menos) y debe minimizar la cantidad de aristas (pues cada arista es de peso positivo, si no tuviese la minima cantidad de aristas saco una y disminute el peso), luego debe tener exactamente $n-1$ aristas. Y además debe ser conexo!, luego se trata de un arbol, y como debe tener como nodos a $V(G)$ es un arbol generador. Pero buscamos la solución de peso minimo (o una de ellas), por ende la solución es un AGM (arbol generador minimo). 
+
+Para esto utilizamos el algoritmo de Prim (no pondremos su pseudocódigo por ser un algoritmo ya visto en clase y muy conocido). Tomamos la opcion de Prim en la que se utiliza un vector para implementar la cola de prioridad que tiene las distancias al AGM de los nodos no incluidos. \textbf{CHECKEA ESTO, NO SE BIEN QUE USAS....} Un breve resumen y descripcion de lo que hace es que itera $n$ veces y a cada paso agrega un nodo al AGM que tenemos hasta ahora, utilizando la arista de menor peso. Utilizamos como representación del grafo \textbf{ACA PONER BIEN LO QUE USES MATO, ACLARA BIEN!!!!}
+
+
+\subsubsection{Complejidad}
+
+Como bien sabemos, la complejidad del algoritmo de Prim puede ser o bien $\mathcal{O} (n^2)$ si se utiliza un vector para implementar la cola de prioridad que tiene las distancias al AGM de los nodos no incluidos (tomar el minimo es $\mathcal{O} (n)$, pero actualizar una distancia es $\mathcal{O} (1)$) o bien $\mathcal{O} ((m+n) log(n))$ si se utiliza un heap (tomar el minimo y actualizar son ambos $\mathcal{O} (log(n))$. Ambas cumplen la complejidad pedida, pero en nuestro caso lo implementamos de la primera forma, por lo que la complejidad es $\mathcal{O} (n^2)$ que cumple lo pedido.
+
+\subsection{Consultora 2}
+
+
+\subsubsection{El algoritmo}
+El algoritmo en si es muy simple, la idea es encontrar el camino máximo del arbol que nos devuelve el algoritmo de la consultora 1 y tomar el nodo que está en la mitad del camino (o alguno de los dos si tiene una cantidad par de nodos el camino). Y para tomar el camino mas largo, lanzamos BFS desde un nodo cualquiera $v$ para medir los caminos minimos (notar que los caminos son unicos, pues es un arbol) a todos los demas nodos (BFS es aplicable pues todas las aristas tienen el mismo peso en este caso) y sea $w$ el que esta mas lejos. Luego lanzamos BFS desde $w$ y sea $z$ el que este a mayor distancia de $w$. Luego el unico camino entre $z$ y $w$ (unico pues es un arbol) es el camino de máxima longitud que buscamos.\textbf{MATO USASTE BFS NO??? CAMBIAR SINO DONDE CORRESPONDA SI USASTE DFS}
+
+Lo que es quizás mas complejo es entender por qué efectivamente esto funciona. Lo que nos piden es dado el arbol que devuelve la consultora 1, encontrar un nodo tal que si lo elegimos como raiz, la altura del arbol sea minima (i.e, minimizar la máxima de las distancias). Veamos primero que esta distancia tiene que ser $\geq x/2$ donde $x = longitud del camino simple maximo$. Supongamos que no, luego es $<x/2$ y por ende el camino entre dos nodos siempre sera $<x$ ya que un camino posible entre dos nodos $a y b$ (no necesariamente simple, por ende de mayor longitud que el simple) es ir desde $a$ hasta el nodo que elegimos como raíz y luego ir desde la raiz al $b$, como ambos caminos son de longitud $<x/2$ (es ir desde un nodo a la raíz y el arbol tiene altura $<x/2$), se deduce que el camino de unir ambos tiene longitud $<x$. Luego, finalmente todo camino entre un par de nodos tiene longitud $<x$, luego $x$ no era camino simple de longitud maxima (notar que el camino entre dos nodos es unico), pues todo camino simple tiene longitud menor. Hemos visto que la distancia debe ser $\geq x/2$, por ende demostramos que encontrar el camino maximo y tomar como raíz un nodo de la mitad del camino, minimiza la altura.
+
+Falta ver entonces que usar dos veces BFS como dijimos nos da efectivamente los dos nodos que dan el camino maximo. Sean $a,b$ los dos nodos que son extremos del camino máximo. Y sea $v$ el nodo desde el que inicialmente lanzamos BFS y $w$ sobre el segundo que lanzamos BFS (el mas lejano de $v$). Si quitamos $v$ del arbol, este se nos divide en $c$ componentes conexas. Si $a $y$ b$ pertenecen a distintas componentes conexas, luego el camino (es un arbol, luego es unico) que los une pasa por $v$. Supongamos sin perdida de generalidad que $w$ no esta en la misma componente conexa que $a$ (si no lo tomamos respecto a $b$, siempre hay uno con el que no esta en la misma componente conexa, pues no puede estar en dos componentes conexas a la vez). Luego, si consideramos el camino desde $w$ a $v$ es de longitud mayor (o igual quizas) que el camino de $a$ a $v$ (pues $w$ es el mas lejano de $v$). Luego el camino de $w$ a $v$ unido con el de $v$ a $b$ tiene longitud mayor (o igual), lo que nos dice que necesariamente uno de esos nodos debe ser $w$. Luego tomamos el más lejano a $w$ lanzando nuevamente BFS y obtenemos el camino maximo. Ya lo probamos si $a$ y $b$ estan en diferentes componentes conexas, veamos que sucede si $a$ y $b$ quedan en la misma componente conexa, pero en ese caso, repetimos el mismo argumento en la componente conexa desde el único elemento que estaba conectado con $v$ como la raíz, luego $w$ sigue siendo el más lejano a este (si alguno $w'$ fuese el nuevo mas lejano, estaría mas lejos que $w$ de $v$ pues solo sumo uno mas en ambas distancias para llegar desde la nueva raíz a $v$ y debo pasar si o si por ella pues es lo que une a la componente conexa con $v$, absurdo). Iteramos así y a cada paso reducimos en uno la altura del arbol que nos va quedando, si en algun momento $a$ y $b$ quedan en componentes conexas distintas, ya esta por lo que porbamos antes, si no repetimos el argumento, hasta que en un momento (cuando la altura del arbol sea 2) al sacar un nodo nos quedan componentes conexas triviales y forzadamente $a$ y $b$ deben estar en componentes conexas distintas y vale lo que dijimos.
+
+Luego hemos probado que hacer BFS dos veces de esta forma nos da el camino simple máximo, en realidad nos da sus extremos, pero como el camino es unico, se deduce, usando \textbf{DECI QUE USAS ACA PARA AGARRAR EL CAMINO EN SI SABIENDO YA LOS VERTICES}. Hemos probado ademas que un nodo de la mitad del camino simple máximo realiza el mínimo buscado (probamos que ninguna otra distancia menor funciona, por ende este es el mínimo). Luego, demostramos que nuestro algoritmo es correcto y hace lo que efectivamente queremos
+
+\subsubsection{Complejidad}
+
+Ejecutamos dos veces BFS, que como bien sabemos es $\mathcal{O} (n+m)$ (ejecutarlo dos veces lo sigue siendo), pero como estamos en un arbol, $m=n-1$ luego $\mathcal{O} (n+m) =\mathcal{O} (n+n-1)=\mathcal{O} (n)$. Luego, una vez que tenemos los extremos del camino máximo, recorremos el grafo buscando las aristas que nos llevan entre ambos extremos, que lo hacemos en $\mathcal{O} (n)$ nuevamente \textbf{DECI QUE USAS ACA PARA AGARRAR EL CAMINO EN SI SABIENDO YA LOS VERTICES, ACLARA BIEN QUE HACES Y PORQUE ES O(n)}. Finalmente tomamos el nodo de la mitad de la lista de nodos que nos dio este recorrido. Como solo hicimos tres cosas que son $\mathcal{O} (n)$, la complejidad total es esa y cumple lo pedido.
+
+\subsection{Experimentación}
+
 \section{Problema 3}
 
+\subsection{El Problema}
+\subsection{El Algoritmo}
+\subsection{Complejidad}
+\subsection{Experimentación}
 \end{document}

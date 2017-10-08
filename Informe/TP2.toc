@@ -11,6 +11,19 @@
 \contentsline {subsubsection}{\numberline {1.4.1}Contexto}{5}{subsubsection.1.4.1}
 \contentsline {subsubsection}{\numberline {1.4.2}Experimentos}{5}{subsubsection.1.4.2}
 \contentsline {subsection}{\numberline {1.5}Conclusiones}{6}{subsection.1.5}
-\contentsline {section}{\numberline {2}Problema 2.1}{7}{section.2}
-\contentsline {section}{\numberline {3}Problema 2.2}{7}{section.3}
-\contentsline {section}{\numberline {4}Problema 3}{7}{section.4}
+\contentsline {section}{\numberline {2}Problema 2}{7}{section.2}
+\contentsline {subsection}{\numberline {2.1}El Problema}{7}{subsection.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1}Descripcion}{7}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}Ejemplos}{7}{subsubsection.2.1.2}
+\contentsline {subsection}{\numberline {2.2}Consultora 1}{7}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}El algoritmo}{7}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}Complejidad}{8}{subsubsection.2.2.2}
+\contentsline {subsection}{\numberline {2.3}Consultora 2}{8}{subsection.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1}El algoritmo}{8}{subsubsection.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2}Complejidad}{9}{subsubsection.2.3.2}
+\contentsline {subsection}{\numberline {2.4}Experimentaci\IeC {\'o}n}{9}{subsection.2.4}
+\contentsline {section}{\numberline {3}Problema 3}{9}{section.3}
+\contentsline {subsection}{\numberline {3.1}El Problema}{9}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}El Algoritmo}{9}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Complejidad}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{9}{subsection.3.4}
