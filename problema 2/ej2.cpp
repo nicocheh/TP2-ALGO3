@@ -7,9 +7,11 @@
 #include <tuple>
 #include <cassert>
 #include <queue>
+#include<chrono>
 
 using namespace std;
 
+#define ya std::chrono::high_resolution_clock::now
 
 void actualizoVecinos(int proximo, int cantServidores, vector<vector<int>> & matrizAdy, vector<pair<int,bool>> & adyacentesAlAGM) {
 
@@ -201,7 +203,7 @@ tuple<int, vector<int>> BFSMasLejano(int inNodo, vector<vector<int>> & listaVeci
 // la consultora 2 usa dos veces Breadth First Algorithm para encontrar el camino más largo
 // del arbol de entrada, luego agarra el nodo en el medio de ese camino, que va a ser la mejor
 // raiz para minimizar la altura del arbol enraízado.
-int consultora2(vector<vector<int>> & listaVecinosAGM) {
+tuple<int,int> consultora2(vector<vector<int>> & listaVecinosAGM) {
 
 	//v1 va a ser un extremo del camino más largo del arbol, v2 va a ser el otro
 	tuple<int, vector<int>> rta1 = BFSMasLejano(1, listaVecinosAGM);
@@ -209,8 +211,7 @@ int consultora2(vector<vector<int>> & listaVecinosAGM) {
 	tuple<int, vector<int>> rta2 = BFSMasLejano(v1, listaVecinosAGM);
 	std::vector<int> caminoMaximo = get<1>(rta2);
 
-	return caminoMaximo[caminoMaximo.size() / 2];
-
+	return make_tuple(caminoMaximo[caminoMaximo.size() / 2], caminoMaximo.size());
 }
 
 
@@ -242,6 +243,7 @@ int main() {
 		// como se que los enlaces tienen pesos positivos,
 		// si en la matriz hay un -1 es que no hay enlace entre esos servidores
 
+
 		for (int i=1; i<=cantEnlaces; ++i) {
 			int s1 = 0;
 			int s2 = 0;
@@ -252,18 +254,61 @@ int main() {
 			matrizAdy[s2][s1] = peso;
 		}
 
-		vector<vector<int>> listaVecinosAGM;
-		int costoDelAGM;
-		vector<vector<int>> matrizIncidenciaAGM;
-		tuple<vector<vector<int>>, int, vector<vector<int>>> rtaConsultora1;
-		rtaConsultora1 = consultora1(matrizAdy, cantServidores);
-		listaVecinosAGM = get<0>(rtaConsultora1);
-		costoDelAGM = get<1>(rtaConsultora1);
-		matrizIncidenciaAGM = get<2>(rtaConsultora1);
+		int repeticiones=1;
+		
+		#ifdef TIEMPOS
+		repeticiones=10;		
 
-		int rtaConsultora2 = consultora2(listaVecinosAGM);
+		std::srand(std::time(0));
 
-		cout << costoDelAGM << " " << rtaConsultora2 << " " << cantServidores-1 << " ";
+		//hago el header del csv
+		std::cout << "cantServidores," << "cantEnlaces," << "costoDelAGM," << "maxPathSize," << "tiempoConsultora1," << "tiempoConsultora1," "\n";
+
+		#endif
+		tuple<int,int> rtaConsultora2;		
+
+		for (repeticiones; repeticiones>0; --repeticiones){
+
+			vector<vector<int>> listaVecinosAGM;
+			int costoDelAGM;
+			vector<vector<int>> matrizIncidenciaAGM;
+			tuple<vector<vector<int>>, int, vector<vector<int>>> rtaConsultora1;
+			
+			#ifdef TIEMPOS
+			auto startTime1 = ya();
+			#endif
+
+			rtaConsultora1 = consultora1(matrizAdy, cantServidores);	
+
+			#ifdef TIEMPOS
+			auto endTime1 = ya();
+			#endif
+
+			listaVecinosAGM = get<0>(rtaConsultora1);
+			costoDelAGM = get<1>(rtaConsultora1);
+			matrizIncidenciaAGM = get<2>(rtaConsultora1);
+
+
+			#ifdef TIEMPOS
+			auto startTime2 = ya();
+			#endif
+
+			rtaConsultora2 = consultora2(listaVecinosAGM);
+
+			#ifdef TIEMPOS
+			auto endTime2 = ya();
+			#endif
+		}
+		
+		#ifdef TIEMPOS
+		
+		VER COMO HICE EN EL TP1 PARA SACAR PROMEDIO DE LOS TIEMPOS Y COUTEAR
+
+		cout << cantServidores << " " << cantEnlaces << " " <<	get<0>(rtaConsultora2) << " " << get<1>(rtaConsultora2) << " " << std::chrono::duration_cast<std::chrono::nanoseconds>(endTime1-startTime1).count() << " " << std::chrono::duration_cast<std::chrono::nanoseconds>(endTime2-startTime2).count() << "\n"; << "\n";
+		#else
+		
+		cout << costoDelAGM << " " << get<0>(rtaConsultora2) << " " << cantServidores-1 << " ";
+
 
 		for (int i=1; i<=cantServidores; ++i) {
 			for (int j=1; j<=cantServidores; ++j) {
@@ -272,6 +317,8 @@ int main() {
 				}
 			}
 		}
+		
+		#endif
 
 	}
 }
