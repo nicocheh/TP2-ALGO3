@@ -27,5 +27,7 @@
 \contentsline {subsubsection}{\numberline {3.1.1}Descripcion}{9}{subsubsection.3.1.1}
 \contentsline {subsubsection}{\numberline {3.1.2}Ejemplos}{9}{subsubsection.3.1.2}
 \contentsline {subsection}{\numberline {3.2}El Algoritmo}{10}{subsection.3.2}
-\contentsline {subsection}{\numberline {3.3}Complejidad}{10}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{10}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.2.1}Resumen}{10}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}El Pseudoc\IeC {\'o}digo}{10}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}Complejidad}{11}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{11}{subsection.3.4}

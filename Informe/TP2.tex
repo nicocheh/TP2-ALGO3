@@ -179,7 +179,7 @@ Cabe aclarar que en el pseudcódigo (como también en la implementación) numera
     \SetKwInOut{Input}{Input}
     \SetKwInOut{Output}{Output}
 
-    \underline{Backtracking} $(confiables,actual,matriz, maximo)$\;
+    \underline{Dinámica} $(trabajos,costo)$\;
     \Input{$trabajos \in \NN_{0}$; $costo \in \NN_{0}^{trabajos \times trabajos}$}
     \Output{$costo \in \NN_{0}$,$lista$ vector enteros}
     
@@ -351,6 +351,49 @@ Planteado de otra forma, la situación que tenemos es un grafo (no orientado) co
 
 \subsection{El Algoritmo}
 
+\subsubsection{Resumen}
+Lo que tenemos que hacer es algo bastante parecido a encontrar un AGM, pero como hemos visto incluso en los ejemplos, la solución no tiene por qué ser un arbol. Más aún ni siquiera tiene que generar (puede que haya un nodo que no sea alcanzable, en ese caso sería uno de $F$ que por ejemplo tiene un costo altísimo la arista que lo une con cualquier otro y siempre es más barato llegar a sus vecinos desde otro elemento de $F$). Pero si nos detenemos a pensar, no tiene sentido que haya un ciclo, ya que sacamos una arista y (como todas tienen peso positivo) disminuye el peso. Luego nuestro grafo solucion no es un AGM, pero si es un bosque que tenga a todos los elementos de $C$ y sea de peso mínimo. Y un bosque es un conjunto de arboles, queremos hacer practicamente lo mismo que en un AGM, pero sin mantener necesariamente la conexión en el grafo que vamos generando. Así surge la idea de lo que realizamos:hacer Prim pero comenzando en vez de con un nodo, con todos los nodos de $F$.
+\subsubsection{El Pseudocódigo}
+ Como se trata efectivamente de una variación del algoritmo de Prim, incluiremos un pseudocodigo
+
+
+\begin{algorithm}[H]
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \underline{PrimModificado} $(G)$\;
+    \Input{$Grafo G$}
+    \Output{$costo \in \NN_{0}$, $lista$ vector de aristas}
+       \For {$v$ en $V(G)$ }{
+       
+       		distancia[u] = $\infty$;
+       		
+       		padre[u] = NULL;
+       		
+       		Añadir a la cola (u, distancia[u]));
+       }
+		\For {$f$ en $F$ }{       
+      		 distancia[f]=0;
+      	}
+       
+       \While{ NO esta vacia la cola}{
+			\For{ v adyacente a u}{ 
+				\If{ $v \in cola \land distancia[v] > peso(u, v)$}{
+        		
+       			padre[v] = u;
+        			
+       			distancia[v] = peso(u, v);
+        			
+       			Actualizar la cola (v, distancia[v]);
+       			}   		
+       		}       
+       }  
+       	\caption{Devuelve un conjunto de aristas que conectan a todo elemento de $C$ con alguno de $F$ con menor costo y su costo} 
+\end{algorithm}
+
+
+
+Como se ve en el pseudocódigo, para resolver el problema usamos el mismo algoritmo que usa Prim, solo que en vez de empezar con algun nodo (cualquiera) marcado como el primer elemento del AGM, empezaremos con todos los elementos de $F$ marcados. Así en cada iteración incluimos al nodo de $C$ que esta a menor distancia del grafo hasta entonces generado, cada vez aumentamos el grafo inicial en un nodo hasta que no queden mas elementos en $C$ (a diferencia de prim en que este grafo siempre era un arbol), y en cada paso siempre incluimos al que suma menor costo (y le actualizamos la distancia a todos sus vecinos). Así, cuando no queden más elementos de $C$ por incluir, tendremos el conjunto de aristas que buscamos y serán las de peso mínimo (el argumento es exactamente el mismo que el de correctitud de Prim, siempre a cada paso agregamos el más cercano - si hubiera una arista $e$ que convenía ser incluida en vez de otra $f$ porque disminuiría el peso, no habría elegido a $f$ en ningun momento pues siempre habría algun elemento a incluir con un costo menor al de $f$-).
 
 \subsection{Complejidad}
 

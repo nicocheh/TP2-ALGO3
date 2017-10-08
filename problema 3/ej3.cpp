@@ -19,9 +19,8 @@ struct ruta{
     pair<nodo,nodo> nodosQueConecta;
 };
 
-void agregarRuta(ruta nuevaRuta, vector<nodo> nodos, vector<ruta>& rutasTotales, vector<ruta>& rutasPosibles, int f, int e1, int e2){
+void agregarRuta(ruta& nuevaRuta, vector<nodo> nodos, vector<ruta>& rutasTotales, vector<ruta>& rutasPosibles, int f, int e1, int e2){
 	//cout<<"entro a agregarRuta"<<endl;
-	rutasTotales.push_back(nuevaRuta);
     if (e1<=f){//fabrica-cliente
 		//cout<<"fabrica-cliente"<<endl;
 		nodos[0].rutasDe.push_back(nuevaRuta.numero);
@@ -45,6 +44,8 @@ void agregarRuta(ruta nuevaRuta, vector<nodo> nodos, vector<ruta>& rutasTotales,
 		nodos[e2-f].rutasDe.push_back(nuevaRuta.numero);
 		nuevaRuta.nodosQueConecta = make_pair(nodos[e1-f],nodos[e2-f]);
 	}
+	
+	rutasTotales.push_back(nuevaRuta);
 }
 }
 
