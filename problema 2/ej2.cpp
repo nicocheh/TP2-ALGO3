@@ -229,6 +229,12 @@ int main() {
 	// cantEnlaces es la cantidad de aristas del grafo del cual quiero encontrar AGM y raiz de ese AGM
 	int cantEnlaces = 0;
 
+	#ifdef TIEMPOS	
+	//hago el header del csv
+	std::cout << "cantServidores," << "cantEnlaces," << "costoDelAGM," << "maxPathSize," << "tiempoConsultora1," << "tiempoConsultora2," "\n";
+
+	#endif	
+
 
 	while (true) {
 
@@ -254,57 +260,44 @@ int main() {
 			matrizAdy[s2][s1] = peso;
 		}
 
-		int repeticiones=1;
-		
-		#ifdef TIEMPOS
-		repeticiones=10;		
-
-		std::srand(std::time(0));
-
-		//hago el header del csv
-		std::cout << "cantServidores," << "cantEnlaces," << "costoDelAGM," << "maxPathSize," << "tiempoConsultora1," << "tiempoConsultora1," "\n";
-
-		#endif
 		tuple<int,int> rtaConsultora2;		
-
-		for (repeticiones; repeticiones>0; --repeticiones){
-
-			vector<vector<int>> listaVecinosAGM;
-			int costoDelAGM;
-			vector<vector<int>> matrizIncidenciaAGM;
-			tuple<vector<vector<int>>, int, vector<vector<int>>> rtaConsultora1;
-			
-			#ifdef TIEMPOS
-			auto startTime1 = ya();
-			#endif
-
-			rtaConsultora1 = consultora1(matrizAdy, cantServidores);	
-
-			#ifdef TIEMPOS
-			auto endTime1 = ya();
-			#endif
-
-			listaVecinosAGM = get<0>(rtaConsultora1);
-			costoDelAGM = get<1>(rtaConsultora1);
-			matrizIncidenciaAGM = get<2>(rtaConsultora1);
-
-
-			#ifdef TIEMPOS
-			auto startTime2 = ya();
-			#endif
-
-			rtaConsultora2 = consultora2(listaVecinosAGM);
-
-			#ifdef TIEMPOS
-			auto endTime2 = ya();
-			#endif
-		}
+		vector<vector<int>> listaVecinosAGM;
+		int costoDelAGM;
+		vector<vector<int>> matrizIncidenciaAGM;
+		tuple<vector<vector<int>>, int, vector<vector<int>>> rtaConsultora1;
 		
 		#ifdef TIEMPOS
-		
-		VER COMO HICE EN EL TP1 PARA SACAR PROMEDIO DE LOS TIEMPOS Y COUTEAR
+		auto startTime1 = ya();
+		for (int i=1; i<=10; ++i) {
+			rtaConsultora1 = consultora1(matrizAdy, cantServidores);	
+		}
+		auto endTime1 = ya();
+		#else
+		rtaConsultora1 = consultora1(matrizAdy, cantServidores);	
+		#endif
 
-		cout << cantServidores << " " << cantEnlaces << " " <<	get<0>(rtaConsultora2) << " " << get<1>(rtaConsultora2) << " " << std::chrono::duration_cast<std::chrono::nanoseconds>(endTime1-startTime1).count() << " " << std::chrono::duration_cast<std::chrono::nanoseconds>(endTime2-startTime2).count() << "\n"; << "\n";
+
+		listaVecinosAGM = get<0>(rtaConsultora1);
+		costoDelAGM = get<1>(rtaConsultora1);
+		matrizIncidenciaAGM = get<2>(rtaConsultora1);
+
+
+		#ifdef TIEMPOS
+		auto startTime2 = ya();
+		for (int i=1; i<=10; ++i) {
+			rtaConsultora2 = consultora2(listaVecinosAGM);
+		}
+		auto endTime2 = ya();
+		#else 
+		rtaConsultora2 = consultora2(listaVecinosAGM);
+		#endif
+		
+		#ifdef TIEMPOS
+		auto tiempo1 = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime1-startTime1).count();
+		auto tiempo2 = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime2-startTime2).count();
+
+		cout << cantServidores << " " << cantEnlaces << " " <<	costoDelAGM << " ";
+		cout << get<1>(rtaConsultora2) << " " << tiempo1/10 << " " << tiempo2/10 << "\n";
 		#else
 		
 		cout << costoDelAGM << " " << get<0>(rtaConsultora2) << " " << cantServidores-1 << " ";
