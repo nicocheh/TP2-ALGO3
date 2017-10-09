@@ -8,10 +8,6 @@
 #include <cassert>
 #include <queue>
 
-#define infinito 32767
-#define fst first
-#define snd second
-
 
 using namespace std;
 
@@ -132,10 +128,9 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vecto
 //BASICAMENTE LO QUE HAGO ES MANDARLE EN VEZ DE CANT DE SERVIDORES F+C
 
 int main(){
-	int a=1;
-	while( a!=0){
-		int f,c,r;
-		cin>>f>>c>>r;
+	int f,c,r;
+	cin>>f>>c>>r;
+	while( f!=0){
 		vector<vector<int>> matrizAdy(f+c+1, vector<int>(f+c+1, -1)); 
 		// como se que los enlaces tienen pesos positivos,
 		// si en la matriz hay un -1 es que no hay enlace entre esos servidores
@@ -177,6 +172,8 @@ int main(){
 				}
 			}
 		}
+		cout<<endl;
+		cin>>f>>c>>r;
 	}
 	
 }
