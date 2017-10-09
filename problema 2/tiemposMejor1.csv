@@ -1,4 +1,4 @@
-cantServidores,cantEnlaces,costoDelAGM,maxPathSize,tiempoConsultora1,tiempoConsultora2,
+cantServidores cantEnlaces costoDelAGM maxPathSize tiempoConsultora1 tiempoConsultora2 
 1 0 0 1 34300 55600
 1 0 0 1 33100 63000
 1 0 0 1 40400 50400
