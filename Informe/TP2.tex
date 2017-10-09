@@ -335,6 +335,15 @@ Ejecutamos dos veces BFS, que como bien sabemos es $\mathcal{O} (n+m)$ (ejecutar
 
 \subsection{Experimentación}
 
+\subsubsection{Contexto}
+
+\subsubsection{Experimentos}
+
+
+
+
+
+
 \section{Problema 3}
 
 \subsection{El Problema}
@@ -401,6 +410,15 @@ Como se ve en el pseudocódigo, para resolver el problema usamos el mismo algori
 Como ya analizamos en el problema 2, la complejidad de prim, por como lo implementamos, es $\mathcal{O} (n^2)$ y por ende ahora será $\mathcal{O} ((|F|+|C|)^2)$ pero si recordamos, el enunciado nos asegura que $|C| \geq |F|$, luego $(|F|+|C|) \leq 2 *|C| = \mathcal{O} (|C|$ y por nde $\mathcal{O} ((|F|+|C|)^2) \leq \mathcal{O} (|C|^2)$. Mostramos asi que el algoritmo cumple la complejidad propuesta. Es claro que nuestra variación no afecta en absoluto la complejidad de prim, pues como implementamos la cola como un arreglo y buscar el minimo nos tomaba $\mathcal{O} (n)$, encontrar el minimo dentro de los que pertenecen a $C$ sigue siendo $\mathcal{O} (n)$ (donde n es el tamaño de la cola). Agregamos si un ciclo que inicializa todas las distancias de los elementos que estan en $F$, eso es $|F|$ operaciones $\mathcal{O} (1)$, lo que es $\mathcal{O} (|F|) \leq \mathcal{O} (|C|)$ y por ende no suma complejidad. Así, hemos probado que la modificación del algoritmo de Prim, mantiene la misma complejidad teórica, por ende hemos probado que nuestro algoritmo es complejidad $\mathcal{O} (|C|^2)$.
 
 \subsection{Experimentación}
+
+\subsubsection{Contexto}
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). 
+El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++) y luego se dividìa el delta de ticks sobre CLOCKS\_PER\_SEC. En todos los experimentos el tiempo se mide en segundos. 
+\subsubsection{Experimentos}
+Primero, se genero una serie de casos aleatorios, generados de la misma forma que en el Problema 2. La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$. Se corrieron casos con $C+F$ entre $1$ y $70$ \textbf{LLEGAR HASTA 100 SI SE PUEDE DESPUES} y para cada uno de ellos, se movió el $F$ entre $1$ y $(C+F-1)/2$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C+F$ y $F$ se ejecutaron $100$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
+
+
+Salvo una pequeña modificación en el código, sabemos que es un problema muy parecido al 2 (más aún porque ambos se implementaron con prim y con un arreglo como estructura para la cola de prioridad). 
 
 
 \end{document}
