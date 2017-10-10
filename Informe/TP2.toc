@@ -24,14 +24,16 @@
 \contentsline {subsection}{\numberline {2.4}Experimentaci\IeC {\'o}n}{9}{subsection.2.4}
 \contentsline {subsubsection}{\numberline {2.4.1}Contexto}{9}{subsubsection.2.4.1}
 \contentsline {subsubsection}{\numberline {2.4.2}Experimentos}{9}{subsubsection.2.4.2}
+\contentsline {subsection}{\numberline {2.5}Conclusiones}{9}{subsection.2.5}
 \contentsline {section}{\numberline {3}Problema 3}{9}{section.3}
 \contentsline {subsection}{\numberline {3.1}El Problema}{9}{subsection.3.1}
 \contentsline {subsubsection}{\numberline {3.1.1}Descripcion}{9}{subsubsection.3.1.1}
 \contentsline {subsubsection}{\numberline {3.1.2}Ejemplos}{9}{subsubsection.3.1.2}
 \contentsline {subsection}{\numberline {3.2}El Algoritmo}{10}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {3.2.1}Resumen}{10}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}El Pseudoc\IeC {\'o}digo}{10}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2}El Pseudoc\IeC {\'o}digo}{11}{subsubsection.3.2.2}
 \contentsline {subsection}{\numberline {3.3}Complejidad}{11}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{11}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Contexto}{11}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Experimentos}{11}{subsubsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{12}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Contexto}{12}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Experimentos}{12}{subsubsection.3.4.2}
+\contentsline {subsection}{\numberline {3.5}Conclusiones}{14}{subsection.3.5}

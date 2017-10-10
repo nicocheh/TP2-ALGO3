@@ -340,6 +340,7 @@ Ejecutamos dos veces BFS, que como bien sabemos es $\mathcal{O} (n+m)$ (ejecutar
 \subsubsection{Experimentos}
 
 
+\subsection{Conclusiones}
 
 
 
@@ -415,17 +416,74 @@ Como ya analizamos en el problema 2, la complejidad de prim, por como lo impleme
 La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). 
 El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++). En todos los experimentos se medira en Ticks el tiempo de ejecución.
 \subsubsection{Experimentos}
-Primero, se genero una serie de casos aleatorios, generados de la misma forma que en el Problema 2. La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$. Se corrieron casos con $C+F$ entre $1$ y $60$ \textbf{LLEGAR HASTA 100 SI SE PUEDE DESPUES} y para cada uno de ellos, se movió el $F$ entre $1$ y $(C+F-1)/2$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C+F$ y $F$ se ejecutaron $100$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
+Primero, se genero una serie de casos aleatorios, generados de la misma forma que en el Problema 2.
+\begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{r1p3.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias.}
+\end{wrapfigure}
 
-PONER GRAFICOS
-Como vemos en los gráficos, parece haber un crecimiento del tiempo de ejecución cuando crece la cantidad de clientes. Para verificar que este crecimiento hace que efectivamente lo estemos resolviendo en $\mathcal{O}(n^2)$, hicimos un grafico de Ticks en función de clientes al cuadrado y como podemos ver el gráfico, salvo para pocos clientes, el gráfico es acotable por una constante (ver gráfico ampliado). En los primeros casos de clientes no sucede ya que al ser pequeña la cantidad de clientes, toma mucha más importancia el termino constante. Más aún, la notación $\mathcal{O}$ solo nos habla de la complejidad asintótica, por lo que esto tiene sentido. 
+ La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$. Se corrieron casos con $C+F$ entre $1$ y $60$ y para cada uno de ellos, se movió el $F$ entre $1$ y $(C+F-1)/2$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C+F$ y $F$ se ejecutaron $100$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
 
-Como ya hemos analizado en el problema 2 y se ve en el pseudocódigo, no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomo aleatoria, teniendo la certeza de que no influiría en las otras. Más aún, no debería haber dependencia con la cantidad de fábricas por como hemos visto, porque simplemente "pintamos" todas al principio de Prim y luego realizamos normalmente el algoritmo de Prim (salvo elegir el mínimo entre los clientes e incluir a cada paso el cliente mas cercano). Por esto realizamos un gráfico para comprobarlo:
-PONER GRAFICO NO DEP FABRICAS
-Efectivamente podemos ver que no hay correlación entre la cantidad de fábricas y el tiempo de ejecución. Vemos que cada vez la dispersión es menor cuando aumenta la cantidad de fábricas, lo que tiene sentido ya que como experimentamos con grafos de tamaño hasta $60$ ($|F|+|C|=60$) cuando fijamos $|F|$ en un número grande, reducimos considerablemente el rango de valores que puede tomar $|C|$ y por ende el rango de valores que toma el tiempo de ejecución (por ejemplo, cuando $|F|$ es 30, obligatoriamente $|C|$ debe serlo). 
+Como vemos en los gráficos, parece haber un crecimiento del tiempo de ejecución cuando crece la cantidad de clientes. Para verificar que este crecimiento hace que efectivamente lo estemos resolviendo en $\mathcal{O}(|C|^2)$, hicimos un grafico de Ticks en función de clientes al cuadrado, donde se puede ver (salvo para pocos clientes) que el gráfico es acotable por una constante (ver gráfico ampliado). En los primeros casos de clientes no sucede ya que al ser pequeña la cantidad de clientes, toma mucha más importancia el termino constante. Más aún, la notación $\mathcal{O}$ solo nos habla de la complejidad asintótica, por lo que esto tiene sentido. 
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.6]{wasdcomplejidad1.png}
+  \includegraphics[scale=0.6]{zoom1p3.png}
+  
+\end{figure}
+\scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias.}
+
+\scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias, con el eje x acotado entre 20 y 60.}
+
+\normalsize
+
+Como ya hemos analizado en el problema 2 y se ve en el pseudocódigo, no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomo aleatoria, teniendo la certeza de que no influiría en las otras. Más aún, no debería haber dependencia con la cantidad de fábricas por como hemos visto, porque simplemente "pintamos" todas al principio de Prim y luego realizamos normalmente el algoritmo de Prim (salvo elegir el mínimo entre los clientes e incluir a cada paso el cliente mas cercano). Pero si recordamos el enunciado y la condicion de que  $|F|<|C|$, notamos que una vez elegida la cantidad de fábricas, sabemos que los clientes son más seguro y eso sí afectaría el tiempo de ejecución directamente. Por esto realizamos un gráfico para comprobarlo:
+
+
+\begin{wrapfigure}{l}{0.4\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{noDepFabricas.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de fabricas para instancias aleatorias.}
+\end{wrapfigure}
+
+Si vemos el gráfico, efectivamente hay correlación entre la cantidad de fábricas y el tiempo de ejecución. Vemos que cada vez la dispersión es menor cuando aumenta la cantidad de fábricas, lo que tiene sentido ya que como experimentamos con grafos de tamaño hasta $60$ ($|F|+|C|=60$) cuando fijamos $|F|$ en un número grande, reducimos considerablemente el rango de valores que puede tomar $|C|$ y por ende el rango de valores que toma el tiempo de ejecución (por ejemplo, cuando $|F|$ es 30, obligatoriamente $|C|$ debe serlo). Por esto, cuando $|F|$ crece, el tiempo de ejecución del caso más rápido crece ya que se da con el menor $|C|$ posible y al crecer $|F|$ lo hace $|C|$ pues $|F|<|C|$. Pero como vemos, el tiempo de ejecución de los casos mas lentos, se mantiene siempre igual, ya que se da con el caso de máximo $|C|$ posible y para cualquier $|F|$ dicho caso es posible. Basicamente pudimos notar que la cantidad de fábricas si influye en la cota inferior del tiempo de ejecución, pero no en la superior ya que esta estará dada por la cantidad de clientes.	
+
+
+
+Queda analizar la dependencia del tiempo de ejecución en funcion de la variable $R$.
+
+ \begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[scale=0.4]{pearson.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de rutas para instancias aleatorias con el índice de pearson.}
+\end{wrapfigure}
+
+ Si bien sabemos que la complejidad del algoritmo es $\mathcal{O} (|C|^2)$, pero si recordamos la complejidad teórica cuando calculamos la del algoritmo de Prim, en un momento recorremos todos los vecinos de un nodo, y como repetimos esto para todos los nodos que son clientes, en total lo hacemos $X(G)$ veces que en este caso es $R$. Luego, como $|V(G)|^2 \geq |X(G)|$ para todo grafo G, acotamos el R por $|C|^2$, pero influye en el tiempo de ejecución este $R$, lo que nos lleva a pensar que dentro de instancias de igual tamaño, las que tengan una mayor cantidad de aristas tendrán un mayor tiempo de ejecución y las que tengan menos aristas un menor tiempo de ejecución.
+
+
+
+\textbf{SI ESTO NO SUCEDIO ASI EFECTIVAMENTE DE + ARISTAS + TIEMPO Y - ARISTAS - TIEMPO CAMBIARLO} Para ver esto, realizamos un gráfico de tiempo de ejecución en funcion de R y 
+Efectivamente en el gráfico parecia verse una correlacion, lo que verificamos utilizando el índice de pearson, como se puede ver en la siguiente figura:
+
+ 
+
+Efectivamente, hay correlación (ya que el p-value es 0) y como el indice de pearson en positivo, este nos indica que al crecer la cantidad de rutas, crece el tiempo de ejecución. Pero también podemos ver que pareciera suceder lo mismo que con las fábricas ya que cuando crece la cantidad de rutas, el rango de valores que toma el tiempo de ejecución decrece.
+
+
+ Trataremos de entender si esto es porque al crecer $R$ crece $|F|+|C|$, lo que fuerza a que crezca $|C|$ (puesto que $R \leq (|C|+|F|)(|C|+|F|-1)/2$ ya que la maxima cantida de aristas -rutas- se da en el completo $K_{|C|+|F|}$, que es el que cumple la igualdad). Trataremos de buscar como es esta relación entre $R$ y el tiempo de ejecución, como también mejores y peores casos:
+
+
+
+\textbf{SOMA ACA EMPEZAS VOS, TODO TUYO, MEJORES Y PEORES CASOS}
+
 
 
 Salvo una pequeña modificación en el código, sabemos que es un problema muy parecido al 2 (más aún porque ambos se implementaron con Prim y con un arreglo como estructura para la cola de prioridad). 
 
+\subsection{Conclusiones}
+
+
+\textbf{ACORDARSE DE AL FINAL DEL INFORME, CHECKEAR TODAS LAS NUMERACIONES DE LAS FIGURAS Y CADA VEZ QUE MENCIONEMOS UNA, LE PONGAMOS EL NUMERO, ASI SE ENTIENDE DE QUE HABLAMOS. NO BORRAR ESTO HASTA EL FINAL DEL INFORME}
 
 \end{document}
