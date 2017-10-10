@@ -92,15 +92,15 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vecto
 
 	// agrego un nodo cualquiera y actualizo todos sus vecinos
 	for (int j=1;j<=f;++j){
-		adyacentesAlG[j] = make_pair(1, true);
+		adyacentesAlG[j] = make_pair(j, true);
 		actualizoVecinos(j, n, matrizAdy, adyacentesAlG);
 		//ACA PONGO COMO INICIALES A TODOS LOS QUE SON FABRICAS
 	}
 
 	int costoDelG = 0;
 
-	// en la iteración i empiezo con i nodos y termino con i+1 nodos. En la iteración
-	// cantServidores-1 tengo un arbol con todos los nodos de mi grafo original.
+	// en la iteración i empiezo con 0 clientes y termino con i clientes. En la iteración
+	// cantClientes tengo un arbol con todos los nodos de mi grafo original.
 	for (int i=1; i<=n-f; ++i) {
 		//REPITO TANTAS VECES COMO CLIENTES HAY
 		int proximo = agarraElMasCercano(adyacentesAlG, matrizAdy,f);
@@ -129,8 +129,9 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vecto
 
 int main(){
 	int f,c,r;
-	cin>>f>>c>>r;
+	cin>>f;
 	while( f!=0){
+		cin>>c>>r;
 		vector<vector<int>> matrizAdy(f+c+1, vector<int>(f+c+1, -1)); 
 		// como se que los enlaces tienen pesos positivos,
 		// si en la matriz hay un -1 es que no hay enlace entre esos servidores
@@ -165,6 +166,11 @@ int main(){
 		}
 		cout << cantaristas/2 << " ";
 
+		//OJOOOO LE AGREGO ESTO RE METIDO QUIZAS ESTA RE MAL, PERO ME SUENA QUE HAY UNA PROP ASI. SI HAY
+		//F FABRICAS NOS QUEDAN F COMP CONEXAS Y DEBERIA DAR, ES PARA CHEQUEAR NOMAS
+		//en un agm hay f+c-1 aristas, a esto le resto cant de cc-1 y queda f+c-f = c
+		assert (cantaristas/2 == c);
+
 		for (int i=1; i<=f+c; ++i) {
 			for (int j=1; j<=f+c; ++j) {
 				if (matrizIncidenciaG[i][j] == 1) {
@@ -173,7 +179,7 @@ int main(){
 			}
 		}
 		cout<<endl;
-		cin>>f>>c>>r;
+		cin>>f;
 	}
 	
 }
