@@ -26,11 +26,11 @@ int main() {
 	std::srand(std::time(0));
 
 	//mis instancias van a tener desde 1 hasta 100 servidores
-	for (int n=11; n<=20; ++n) {
+	for (int n=11; n<=11; ++n) {
 	//ELIJO LA CANTIDAD DE SERVIDORES ENTRE 1 Y N Y PARA CADA UNO DE ESOS HAGO 100 CASOS
 	for(int f=1; f<n/2;++f){
 		//para cada tamaño voy a probar 100 casos distintos 
-		for (int j=1; j<=100; ++j) {
+		for (int j=1; j<=1; ++j) {
 			
 			
 
@@ -55,11 +55,11 @@ int main() {
 			}
 
 			//las aristas pueden ir desde 0 hasta n^2, pero hay n-1 que ya las puse antes para asegurarme que el grafo sea conexo.
-			int maxExtras = ((n*(n-1))/2)-(n-1)+1;
+			int maxExtras = ((n*(n-1))/2)-(n-f);
 			if (n<=2) {
 				maxExtras = 1;
 			}
-			int aristasExtras = std::rand() % (maxExtras);
+			int aristasExtras = std::rand() % (maxExtras)+1;
 					
 			//agrego las aristas extras para varias el grafo, pero que no son necesarias para que sea conexo
 			for (int i=1; i<=aristasExtras; ++i) {
@@ -79,11 +79,11 @@ int main() {
 				matrizAdy[nodoOrigen][vecino] = peso;
 			}
 
-			int m = aristasExtras + n -1;
+			int m = aristasExtras + (n-f);
 			
-			instancias << f << " " << n-f << " " << m << "\n";
+			instancias << f << " " << n-f << " " << m << endl;
 			for (vector<tuple<int,int,int>>::iterator it=aristas.begin(); it != aristas.end(); ++it) {
-				instancias << get<0>(*it) << " " << get<1>(*it) << " " << get<2>(*it) << "\n"; 
+				instancias << get<0>(*it) << " " << get<1>(*it) << " " << get<2>(*it) << endl; 
 			}
 
 		}
@@ -92,7 +92,7 @@ int main() {
 
 	
 
-	instancias << "0" << "\n";
+	instancias << "0" << endl;
 	return 0;
 }
 
