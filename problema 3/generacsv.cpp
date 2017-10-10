@@ -92,15 +92,15 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vecto
 
 	// agrego un nodo cualquiera y actualizo todos sus vecinos
 	for (int j=1;j<=f;++j){
-		adyacentesAlG[j] = make_pair(1, true);
+		adyacentesAlG[j] = make_pair(j, true);
 		actualizoVecinos(j, n, matrizAdy, adyacentesAlG);
 		//ACA PONGO COMO INICIALES A TODOS LOS QUE SON FABRICAS
 	}
 
 	int costoDelG = 0;
 
-	// en la iteración i empiezo con i nodos y termino con i+1 nodos. En la iteración
-	// cantServidores-1 tengo un arbol con todos los nodos de mi grafo original.
+	// en la iteración i empiezo con 0 clientes y termino con i clientes. En la iteración
+	// cantClientes tengo un arbol con todos los nodos de mi grafo original.
 	for (int i=1; i<=n-f; ++i) {
 		//REPITO TANTAS VECES COMO CLIENTES HAY
 		int proximo = agarraElMasCercano(adyacentesAlG, matrizAdy,f);
@@ -130,15 +130,16 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vecto
 int main(){
 	
 	std::ofstream instancias;
-	instancias.open ("instanciasRandom.csv");
+	instancias.open ("instanciasRandom2.csv");
 
 	int f,c,r;
-	cin>>f>>c>>r;
+	cin>>f;
 	while( f!=0){
+		cin >>c>>r;
 		vector<vector<int>> matrizAdy(f+c+1, vector<int>(f+c+1, -1)); 
 		// como se que los enlaces tienen pesos positivos,
 		// si en la matriz hay un -1 es que no hay enlace entre esos servidores
-
+		
 		for (int i=1; i<=r; ++i) {
 			int s1 = 0;
 			int s2 = 0;
@@ -154,8 +155,8 @@ int main(){
 		auto listaVecinosG = get<0>(resPrim);
 		auto costoDelG = get<1>(resPrim);
 		auto matrizIncidenciaG = get<2>(resPrim);
-		clock_t clockTicksTaken = clock() - start;
-		double tiempo = clockTicksTaken / (double) CLOCKS_PER_SEC;
+		std::clock_t fin = clock();
+		long long int tiempo = fin-start;
 		
 		
 		//cout << costoDelG << " ";
@@ -181,9 +182,8 @@ int main(){
 		}
 		//cout<<endl;
 		instancias << f << " " << c << " " << r << " " << costoDelG << " " << cantaristas/2 << " " << tiempo << " " << "\n";
-		instancias.close();
 		
-		cin>>f>>c>>r;
+		cin>>f;
 	}
-	
+	instancias.close();
 }

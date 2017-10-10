@@ -131,19 +131,16 @@ int main(){
 	int f,c,r;
 	cin>>f;
 	while( f!=0){
-		cout<< "el cin"<< f << endl;
 		cin>>c>>r;
 		vector<vector<int>> matrizAdy(f+c+1, vector<int>(f+c+1, -1)); 
 		// como se que los enlaces tienen pesos positivos,
 		// si en la matriz hay un -1 es que no hay enlace entre esos servidores
 
-		cout<< "el cin"<< f<<" "<< c <<" " <<r<<endl;
 		for (int i=1; i<=r; ++i) {
 			int s1 = 0;
 			int s2 = 0;
 			int peso = 0;
 			cin >> s1 >> s2 >> peso;
-			cout<< "el cin"<< s1<<" "<< s2 <<" " <<peso<<endl;
 			matrizAdy[s1][s2] = peso;
 			matrizAdy[s2][s1] = peso;
 		}

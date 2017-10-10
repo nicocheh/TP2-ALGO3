@@ -21,16 +21,16 @@ int main() {
 	int repeticiones = 0; 
 
 	std::ofstream instancias;
-	instancias.open ("instanciasRandom.txt");
+	instancias.open ("instanciasRandom2.txt");
 
 	std::srand(std::time(0));
 
 	//mis instancias van a tener desde 1 hasta 100 servidores
-	for (int n=11; n<=11; ++n) {
+	for (int n=1; n<=200; ++n) {
 	//ELIJO LA CANTIDAD DE SERVIDORES ENTRE 1 Y N Y PARA CADA UNO DE ESOS HAGO 100 CASOS
 	for(int f=1; f<n/2;++f){
 		//para cada tamaño voy a probar 100 casos distintos 
-		for (int j=1; j<=1; ++j) {
+		for (int j=1; j<=10; ++j) {
 			
 			
 
