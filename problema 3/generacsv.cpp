@@ -130,7 +130,7 @@ tuple<vector<vector<int>>, int, vector<vector<int>>> PrimModificado(vector<vecto
 int main(){
 	
 	std::ofstream instancias;
-	instancias.open ("mejorchebar.csv");
+	instancias.open ("peorchebar.csv");
 
 	int f,c,r;
 	cin>>f;

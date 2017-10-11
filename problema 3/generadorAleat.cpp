@@ -24,11 +24,11 @@ int main() {
 	instancias.open ("peorchebar.txt");
 
 	std::srand(std::time(0));
-int f=1;
+
 	//mis instancias van a tener desde 1 hasta 100 servidores
-	for (int n=2; n<=61; ++n) {
+	for (int n=3; n<=120; ++n) {
 	//ELIJO LA CANTIDAD DE SERVIDORES ENTRE 1 Y N Y PARA CADA UNO DE ESOS HAGO 100 CASOS
-	
+	int f=n/2;
 		//para cada tamaño voy a probar 100 casos distintos 
 	//	for (int j=1; j<=10; ++j) {
 			
