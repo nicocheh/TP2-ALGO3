@@ -11,6 +11,13 @@
 \addtolength{\topmargin}{-1in}
 \addtolength{\textheight}{2in}
 
+
+\usepackage{subcaption} %para poner varias imagenes en un figure
+
+%\usepackage{geometry} % Required to change the page size to A4
+
+
+
 \usepackage{mathtools}
 \usepackage{graphicx}              % to include figures
 \usepackage{amsmath}               % great math stuff
@@ -107,18 +114,60 @@
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
 
- \chead{Algo III, TP2, Chehebar, Duran, Somacal}
- 
-\title{Algoritmos y Estructuras de Datos III, TP2}
-\author{Nicolás Chehebar, Matías Duran, Lucas Somacal}
-\date{}
-
 
 \begin{document}
 
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\center % Center everything on the page
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\textsc{\LARGE Universidad de Buenos Aires}\\[1.5cm] % Name of your university/college
+\textsc{\Large Facultad de Ciencias Exactas y Naturales}\\[0.5cm] % Major heading such as course name
+\textsc{\large Departamento de Computación}\\[0.5cm] % Minor heading such as course title
+\textsc{\large Algoritmos y Estructuras de Datos III}\\[0.5cm] % Minor heading such as course title
+
+\HRule \\[0.8cm]
+{ \huge \bfseries Trabajo Práctico 2}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.8\textwidth}
+\center
+%\begin{flushleft} 
+\Large
+\emph{Autores:}
+Nicolás Chehebar, Matías Duran, Lucas Somacal % Your name
+%\end{flushleft}
+~
+\end{minipage}\\[4cm]
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+
+ %\chead{Algo III, TP2, Chehebar, Duran, Somacal}
+ 
+%\title{Algoritmos y Estructuras de Datos III, TP2}
+%\author{Nicolás Chehebar, Matías Duran, Lucas Somacal}
+%\date{}
+
+
+
 \pagenumbering{roman}
 \pagenumbering{arabic}
-\maketitle
+%\maketitle
 \tableofcontents
 \clearpage
 
