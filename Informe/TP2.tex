@@ -11,6 +11,13 @@
 \addtolength{\topmargin}{-1in}
 \addtolength{\textheight}{2in}
 
+
+\usepackage{subcaption} %para poner varias imagenes en un figure
+
+%\usepackage{geometry} % Required to change the page size to A4
+
+
+
 \usepackage{mathtools}
 \usepackage{graphicx}              % to include figures
 \usepackage{amsmath}               % great math stuff
@@ -107,18 +114,60 @@
 \usepackage[utf8]{inputenc}
 \usepackage{fancyhdr}
 
- \chead{Algo III, TP2, Chehebar, Duran, Somacal}
- 
-\title{Algoritmos y Estructuras de Datos III, TP2}
-\author{Nicolás Chehebar, Matías Duran, Lucas Somacal}
-\date{}
-
 
 \begin{document}
 
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\center % Center everything on the page
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\textsc{\LARGE Universidad de Buenos Aires}\\[1.5cm] % Name of your university/college
+\textsc{\Large Facultad de Ciencias Exactas y Naturales}\\[0.5cm] % Major heading such as course name
+\textsc{\large Departamento de Computación}\\[0.5cm] % Minor heading such as course title
+\textsc{\large Algoritmos y Estructuras de Datos III}\\[0.5cm] % Minor heading such as course title
+
+\HRule \\[0.8cm]
+{ \huge \bfseries Trabajo Práctico 2}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.8\textwidth}
+\center
+%\begin{flushleft} 
+\Large
+\emph{Autores:}
+Nicolás Chehebar, Matías Duran, Lucas Somacal % Your name
+%\end{flushleft}
+~
+\end{minipage}\\[4cm]
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+
+ %\chead{Algo III, TP2, Chehebar, Duran, Somacal}
+ 
+%\title{Algoritmos y Estructuras de Datos III, TP2}
+%\author{Nicolás Chehebar, Matías Duran, Lucas Somacal}
+%\date{}
+
+
+
 \pagenumbering{roman}
 \pagenumbering{arabic}
-\maketitle
+%\maketitle
 \tableofcontents
 \clearpage
 
@@ -454,7 +503,7 @@ Ahora si, en la figura 8 se puede ver como los casos con un camino máximo de lo
 
 \subsection{Conclusiones}
 
-
+Se puede concluir de la experimentación computacional que las complejidades teóricas predichas ( $\mathcal{O} (n^2)$ y  $\mathcal{O} (n)$)  son efectivamente ciertas. Además, con el estudio de los peores y mejores casos comprobados en las figuras 5 y 8 se obtuvo información valiosa sobre el desempeño de los algoritmos bajo distintas condiciones de uso. Con este tipo de estudios es puede diferenciar entre distintas implementaciones de algoritmos que si bien cumplen con la misma complejidad teórica, presentan un desempeño distinto bajo distintas condiciones de las instancias de entrada. Sabemos entonces que las consultoras en cuestión presentaran tiempos de ejecución menores para grafos con una menor cantidad de aristas y cuyo AGM presente un camino máximo lo más corto posible.
 
 
 \section{Problema 3}
@@ -532,17 +581,17 @@ Primero, se genero una serie de casos aleatorios, generados de la misma forma qu
 \begin{wrapfigure}{R}{0.4\textwidth}
 \centering
 \includegraphics[width=0.4\textwidth]{r1p3.png}
-\caption{ Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias.}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias. \textbf CAMBIARLO POR EL NUEVO }
 \end{wrapfigure}
 
- La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$. Se corrieron casos con $C+F$ entre $1$ y $60$ y para cada uno de ellos, se movió el $F$ entre $1$ y $(C+F-1)/2$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C+F$ y $F$ se ejecutaron $100$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
+ La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$ (los nodos mayores a $F$ serán los clientes, y los menores las fábricas). Se corrieron casos con $C$ entre $1$ y $60$ y para cada uno de ellos, se movió el $F$ entre $1$ y $C$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C+F$ y $F$ se ejecutaron $100$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
 
 Como vemos en los gráficos, parece haber un crecimiento del tiempo de ejecución cuando crece la cantidad de clientes. Para verificar que este crecimiento hace que efectivamente lo estemos resolviendo en $\mathcal{O}(|C|^2)$, hicimos un grafico de Ticks en función de clientes al cuadrado, donde se puede ver (salvo para pocos clientes) que el gráfico es acotable por una constante (ver gráfico ampliado). En los primeros casos de clientes no sucede ya que al ser pequeña la cantidad de clientes, toma mucha más importancia el termino constante. Más aún, la notación $\mathcal{O}$ solo nos habla de la complejidad asintótica, por lo que esto tiene sentido. 
 
 \begin{figure}[h!]
   \includegraphics[scale=0.6]{wasdcomplejidad1.png}
   \includegraphics[scale=0.6]{zoom1p3.png}
-  
+
 \end{figure}
 \scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias.}
 
@@ -550,8 +599,11 @@ Como vemos en los gráficos, parece haber un crecimiento del tiempo de ejecució
 
 \normalsize
 
-Como ya hemos analizado en el problema 2 y se ve en el pseudocódigo, no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomo aleatoria, teniendo la certeza de que no influiría en las otras. Más aún, no debería haber dependencia con la cantidad de fábricas por como hemos visto, porque simplemente "pintamos" todas al principio de Prim y luego realizamos normalmente el algoritmo de Prim (salvo elegir el mínimo entre los clientes e incluir a cada paso el cliente mas cercano). Pero si recordamos el enunciado y la condicion de que  $|F|<|C|$, notamos que una vez elegida la cantidad de fábricas, sabemos que los clientes son más seguro y eso sí afectaría el tiempo de ejecución directamente. Por esto realizamos un gráfico para comprobarlo:
+Como ya hemos analizado en el problema 2 y se ve en el pseudocódigo, no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomo aleatoria, teniendo la certeza de que no influiría en las otras. 
 
+Por otro lado, si bien la cantidad de fábricas no aparece en la complejidad teórica, al empezar el algoritmo "pintamos" todas al principio de Prim y revisamos todos sus vecinos para actualizar las distancias al AGM, y solo luego realizamos normalmente el algoritmo de Prim. Pero si recordamos el enunciado y la condicion de que  $|F|<|C|$, notamos que este paso inicial de revisar todos los vecinos está acotado por $|C|$, razón por la que queda la complejidad teórica explicada previamente. Pero a la hora de efectivamente ejecutar el algoritmo por casos de prueba estos pasos se hacen, y aunque estén acotados teóricamente, con una mayor cantidad de fábricas habrá que chequear más vecinos en el paso inicial, aumentando el tiempo necesario de ejecución.Para comprobar esto realizamos los siguientes gráficos:
+
+\textbf {OJO, NO SE SI ESTOS SIGUEN SIRVIENDO PORQUE ES LA FORMA VIEJA DE REALIZAR LOS CASOS ALEATORIOS, Y DICE LO OPUESTO QUE LA CONCLUSIÓN DEL PEOR Y MEJOR CASO. A ESTA ALTURA ME PARECE QUE DIRECTO METERÍA LOS MEJORES Y PEORES CASOS QUE CONFIRMAN LO DE ARRIBA, PERO SI SE LES OCURRE ALGO PIOLA PARA METER LO METEMOS ACA. LO DE PEARSON SI ESTÁ BUENO DEJARLO, Y PODEMOS DECIR QUE ESE GRÁFICO NOS CONVENCIÓ Y POR ESO GENERAMOS ESTOS PEORES Y MEJORES CASOS}
 
 \begin{wrapfigure}{l}{0.4\textwidth}
 \centering
@@ -597,7 +649,5 @@ Salvo una pequeña modificación en el código, sabemos que es un problema muy p
 
 
 \textbf{ACORDARSE DE AL FINAL DEL INFORME, CHECKEAR TODAS LAS NUMERACIONES DE LAS FIGURAS Y CADA VEZ QUE MENCIONEMOS UNA, LE PONGAMOS EL NUMERO, ASI SE ENTIENDE DE QUE HABLAMOS. NO BORRAR ESTO HASTA EL FINAL DEL INFORME}
-
-\textbf{NO PUSE CONCLUSIONES EN EL 2, ESTA TODO EN LA EXPERIMENTACIÓN, SI SE LES OCURRE ALGO QUE QUIERAN PONER DIGANME Y LO METO (soy mato)}
 
 \end{document}
