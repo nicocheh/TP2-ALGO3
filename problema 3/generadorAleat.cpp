@@ -21,16 +21,16 @@ int main() {
 	int repeticiones = 0; 
 
 	std::ofstream instancias;
-	instancias.open ("instanciasRandom2.txt");
+	instancias.open ("peorchebar.txt");
 
 	std::srand(std::time(0));
-
+int f=1;
 	//mis instancias van a tener desde 1 hasta 100 servidores
-	for (int n=1; n<=200; ++n) {
+	for (int n=2; n<=61; ++n) {
 	//ELIJO LA CANTIDAD DE SERVIDORES ENTRE 1 Y N Y PARA CADA UNO DE ESOS HAGO 100 CASOS
-	for(int f=1; f<n/2;++f){
+	
 		//para cada tamaño voy a probar 100 casos distintos 
-		for (int j=1; j<=10; ++j) {
+	//	for (int j=1; j<=10; ++j) {
 			
 			
 
@@ -59,7 +59,7 @@ int main() {
 			if (n<=2) {
 				maxExtras = 1;
 			}
-			int aristasExtras = std::rand() % (maxExtras)+1;
+			int aristasExtras = maxExtras;
 					
 			//agrego las aristas extras para varias el grafo, pero que no son necesarias para que sea conexo
 			for (int i=1; i<=aristasExtras; ++i) {
@@ -86,8 +86,8 @@ int main() {
 				instancias << get<0>(*it) << " " << get<1>(*it) << " " << get<2>(*it) << endl; 
 			}
 
-		}
-	}
+		
+//	}
 	}
 
 	
