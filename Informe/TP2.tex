@@ -350,7 +350,7 @@ Ejecutamos dos veces BFS, que como bien sabemos es $\mathcal{O} (n+m)$ (ejecutar
 \subsection{El Problema}
 
 \subsubsection{Descripcion}
-Planteado de otra forma, la situación que tenemos es un grafo (no orientado) con pesos positivos en las aristas $G$ en el cual tenemos una particion de $V(G)={F,C}$ dada  (con $|C| \geq |F|$) y queremos hallar un subconjunto de aristas $E' \subseteq X(G)$ que tenga peso minimo (o sea minimizar $\sum_{e \in E'} {peso(e)}$) y que cumpla que para todo nodo en $C$ existe un camino a algun nodo en $F$ (o sea, para toda componente conexa $W$ del  grafo $H=(V(G),E')$,  $\exists v \in F$). Nos piden hallar ese costo minimo (i.e $\sum_{e \in E'} {peso(e)}$) cuantas y qué aristas lo logran.
+Planteado de otra forma, la situación que tenemos es un grafo (no orientado) con pesos positivos en las aristas $G$ en el cual tenemos una particion de $V(G)={F,C}$ dada  (con $|C| \geq |F|$) y queremos hallar un subconjunto de aristas $E' \subseteq X(G)$ que tenga peso minimo (o sea minimizar $\sum\limits_{e \in E'} {peso(e)}$) y que cumpla que para todo nodo en $C$ existe un camino a algun nodo en $F$ (o sea, para toda componente conexa $W$ del  grafo $H=(V(G),E')$,  $\exists v \in F$). Nos piden hallar ese costo minimo (i.e $\sum\limits_{e \in E'} {peso(e)}$) cuantas y qué aristas lo logran.
 \subsubsection{Ejemplos}
 
 \begin{itemize}
@@ -362,7 +362,7 @@ Planteado de otra forma, la situación que tenemos es un grafo (no orientado) co
 \subsection{El Algoritmo}
 
 \subsubsection{Resumen}
-Lo que tenemos que hacer es algo bastante parecido a encontrar un AGM, pero como hemos visto incluso en los ejemplos, la solución no tiene por qué ser un arbol. Más aún ni siquiera tiene que generar (puede que haya un nodo que no sea alcanzable, en ese caso sería uno de $F$ -por ejemplo uno que tiene un costo altísimo cada arista que lo une con cualquier otro y siempre es más barato llegar a sus vecinos desde otro elemento de $F$-). Pero si nos detenemos a pensar, no tiene sentido que haya un ciclo, ya que sacamos una arista y (como todas tienen peso positivo) disminuye el peso. Luego nuestro grafo solucion no es un AGM, pero si es un bosque que tenga a todos los elementos de $C$ y sea de peso mínimo. Y un bosque es un conjunto de arboles, queremos hacer practicamente lo mismo que en un AGM, pero sin mantener necesariamente la conexión en el grafo que vamos generando (al que le agregamos un nodo y una arista en cada iteración). De hecho, sabemos que este grafo tendrá exactamente $|C|$ aristas, una por cada iteración ya que en cada iteración agregaremos al cliente "más cercano". Así surge la idea de lo que realizamos:hacer Prim pero comenzando en vez de con un nodo, con todos los nodos de $F$.
+Lo que tenemos que hacer es algo bastante parecido a encontrar un AGM, pero como hemos visto incluso en los ejemplos, la solución no tiene por qué ser un arbol. Más aún ni siquiera tiene que generar (puede que haya un nodo que no sea alcanzable, en ese caso sería uno de $F$ -por ejemplo uno que tiene un costo altísimo cada arista que lo une con cualquier otro y siempre es más barato llegar a sus vecinos desde otro elemento de $F$-). Pero si nos detenemos a pensar, no tiene sentido que haya un ciclo, ya que sacamos una arista y (como todas tienen peso positivo) disminuye el peso. Luego nuestro grafo solucion no es un AGM, pero si es un bosque que tenga a todos los elementos de $C$ y sea de peso mínimo. Y un bosque es un conjunto de arboles, queremos hacer practicamente lo mismo que en un AGM, pero sin mantener necesariamente la conexión en el grafo que vamos generando (al que le agregamos un nodo y una arista en cada iteración). De hecho, sabemos que este grafo tendrá exactamente $|C|$ aristas, una por cada iteración ya que en cada iteración agregaremos al cliente "más cercano". Así surge la idea de lo que realizamos: hacer Prim pero comenzando en vez de con un nodo, con todos los nodos de $F$.
 \subsubsection{El Pseudocódigo}
  Como se trata efectivamente de una variación del algoritmo de Prim, incluiremos un pseudocodigo
 
@@ -408,7 +408,7 @@ Como se ve en el pseudocódigo, para resolver el problema usamos el mismo algori
 
 \subsection{Complejidad}
 
-Como ya analizamos en el problema 2, la complejidad de prim, por como lo implementamos, es $\mathcal{O} (n^2)$ y por ende ahora será $\mathcal{O} ((|F|+|C|)^2)$ pero si recordamos, el enunciado nos asegura que $|C| \geq |F|$, luego $(|F|+|C|) \leq 2 *|C| = \mathcal{O} (|C|$ y por nde $\mathcal{O} ((|F|+|C|)^2) \leq \mathcal{O} (|C|^2)$. Mostramos asi que el algoritmo cumple la complejidad propuesta. Es claro que nuestra variación no afecta en absoluto la complejidad de prim, pues como implementamos la cola como un arreglo y buscar el minimo nos tomaba $\mathcal{O} (n)$, encontrar el minimo dentro de los que pertenecen a $C$ sigue siendo $\mathcal{O} (n)$ (donde n es el tamaño de la cola). Agregamos si un ciclo que inicializa todas las distancias de los elementos que estan en $F$, eso es $|F|$ operaciones $\mathcal{O} (1)$, lo que es $\mathcal{O} (|F|) \leq \mathcal{O} (|C|)$ y por ende no suma complejidad. Así, hemos probado que la modificación del algoritmo de Prim, mantiene la misma complejidad teórica, por ende hemos probado que nuestro algoritmo es complejidad $\mathcal{O} (|C|^2)$.
+Como ya analizamos en el problema 2, la complejidad de prim, por como lo implementamos, es $\mathcal{O} (n^2)$ y por ende ahora será $\mathcal{O} ((|F|+|C|)^2)$ pero si recordamos, el enunciado nos asegura que $|C| \geq |F|$, luego $(|F|+|C|) \leq 2 *|C| = \mathcal{O} (|C|$ y por lo tanto, $\mathcal{O} ((|F|+|C|)^2) \leq \mathcal{O} (|C|^2)$. Mostramos así que el algoritmo cumple la complejidad propuesta. Es claro que nuestra variación no afecta en absoluto la complejidad de prim, pues como implementamos la cola como un arreglo y buscar el minimo nos tomaba $\mathcal{O} (n)$, encontrar el minimo dentro de los que pertenecen a $C$ sigue siendo $\mathcal{O} (n)$ (donde n es el tamaño de la cola). Agregamos si un ciclo que inicializa todas las distancias de los elementos que estan en $F$, eso es $|F|$ operaciones $\mathcal{O} (1)$, lo que es $\mathcal{O} (|F|) \leq \mathcal{O} (|C|)$ y por ende no suma complejidad. Así, hemos probado que la modificación del algoritmo de Prim, mantiene la misma complejidad teórica, por ende hemos probado que nuestro algoritmo es complejidad $\mathcal{O} (|C|^2)$.
 
 \subsection{Experimentación}
 
@@ -463,8 +463,8 @@ Queda analizar la dependencia del tiempo de ejecución en funcion de la variable
 
 
 
-\textbf{SI ESTO NO SUCEDIO ASI EFECTIVAMENTE DE + ARISTAS + TIEMPO Y - ARISTAS - TIEMPO CAMBIARLO} Para ver esto, realizamos un gráfico de tiempo de ejecución en funcion de R y 
-Efectivamente en el gráfico parecia verse una correlacion, lo que verificamos utilizando el índice de pearson, como se puede ver en la siguiente figura:
+\textbf{SI ESTO NO SUCEDIO ASI EFECTIVAMENTE DE + ARISTAS + TIEMPO Y - ARISTAS - TIEMPO CAMBIARLO} Para ver esto, realizamos un gráfico de tiempo de ejecución en funcion de R. 
+Efectivamente en el gráfico parecía verse una correlación, lo que verificamos utilizando el índice de pearson, como se puede ver en la siguiente figura:
 
  
 
